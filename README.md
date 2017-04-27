@@ -3,6 +3,8 @@
 ### Requirements
 
 * Visual Studio 2013
+* Xcode 8
+* QtCreator 5.8
 * DIRECT 5
 
 ### Build Instructions
