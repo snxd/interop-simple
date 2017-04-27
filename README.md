@@ -11,13 +11,13 @@
 2. Select Debug and rebuild solution
 3. Copy simpleinterop.dll from the Debug subdirectory to host.exe directory
 4. Copy simpleobject.js and simpleobjecttest.js from the js directory to the skin directory
-5. Add the following task to be run in the load entry point: ```
+5. Edit workflow.json and add the following task to be run in the load entry point: ```
     "loadSimple": {
         "type": "interopLoad",
         "name": "simple",
         "path": "{ModulePath}{LibraryPrefix}simpleinterop.{LibraryExtension}"
     },```
-6. Add the following task to be run in the unload entry point: ```
+6. Edit workflow.json and add the following task to be run in the unload entry point: ```
     "unloadSimple": {
         "type": "interopUnload",
         "name": "simple",
