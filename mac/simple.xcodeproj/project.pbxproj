@@ -27,7 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		D82D5F891EB2786900EA3BF5 /* libsimpleinterop.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsimpleinterop.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		D82D5F891EB2786900EA3BF5 /* libsimple.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsimple.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82D5F911EB278BB00EA3BF5 /* simpleinterop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simpleinterop.c; path = ../simpleinterop.c; sourceTree = "<group>"; };
 		D82D5F921EB278BB00EA3BF5 /* simpleobject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simpleobject.c; path = ../simpleobject.c; sourceTree = "<group>"; };
 		D82D5F931EB278BB00EA3BF5 /* simpleobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpleobject.h; path = ../simpleobject.h; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		D82D5F8A1EB2786900EA3BF5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D82D5F891EB2786900EA3BF5 /* libsimpleinterop.dylib */,
+				D82D5F891EB2786900EA3BF5 /* libsimple.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -136,9 +136,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D82D5F881EB2786900EA3BF5 /* simpleinterop */ = {
+		D82D5F881EB2786900EA3BF5 /* simple */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D82D5F8D1EB2786900EA3BF5 /* Build configuration list for PBXNativeTarget "simpleinterop" */;
+			buildConfigurationList = D82D5F8D1EB2786900EA3BF5 /* Build configuration list for PBXNativeTarget "simple" */;
 			buildPhases = (
 				D82D5F851EB2786900EA3BF5 /* Sources */,
 				D82D5F861EB2786900EA3BF5 /* Frameworks */,
@@ -148,9 +148,9 @@
 			);
 			dependencies = (
 			);
-			name = simpleinterop;
-			productName = simpleinterop;
-			productReference = D82D5F891EB2786900EA3BF5 /* libsimpleinterop.dylib */;
+			name = simple;
+			productName = simple;
+			productReference = D82D5F891EB2786900EA3BF5 /* libsimple.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -168,7 +168,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D82D5F841EB2786900EA3BF5 /* Build configuration list for PBXProject "simpleinterop" */;
+			buildConfigurationList = D82D5F841EB2786900EA3BF5 /* Build configuration list for PBXProject "simple" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -180,7 +180,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D82D5F881EB2786900EA3BF5 /* simpleinterop */,
+				D82D5F881EB2786900EA3BF5 /* simple */,
 			);
 		};
 /* End PBXProject section */
@@ -299,7 +299,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
-				EXPORTED_SYMBOLS_FILE = "${PROJECT_DIR}/simpleinterop.def";
+				EXPORTED_SYMBOLS_FILE = "${PROJECT_DIR}/simple.def";
 				HEADER_SEARCH_PATHS = (
 					../jansson/,
 					../interop/,
@@ -314,7 +314,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
-				EXPORTED_SYMBOLS_FILE = "${PROJECT_DIR}/simpleinterop.def";
+				EXPORTED_SYMBOLS_FILE = "${PROJECT_DIR}/simple.def";
 				HEADER_SEARCH_PATHS = (
 					../jansson/,
 					../interop/,
@@ -326,7 +326,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D82D5F841EB2786900EA3BF5 /* Build configuration list for PBXProject "simpleinterop" */ = {
+		D82D5F841EB2786900EA3BF5 /* Build configuration list for PBXProject "simple" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D82D5F8B1EB2786900EA3BF5 /* Debug */,
@@ -335,7 +335,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D82D5F8D1EB2786900EA3BF5 /* Build configuration list for PBXNativeTarget "simpleinterop" */ = {
+		D82D5F8D1EB2786900EA3BF5 /* Build configuration list for PBXNativeTarget "simple" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D82D5F8E1EB2786900EA3BF5 /* Debug */,

@@ -1,7 +1,7 @@
 import qbs;
 
 Product {
-    name: "simpleinterop"
+    name: "simple"
     type: [ "dynamiclibrary" ]
     consoleApplication: false
 
@@ -23,14 +23,14 @@ Product {
         ])
         cpp.visibility: "hidden"
         cpp.linkerFlags: base.concat([
-            "-Wl,--retain-symbols-file=" + sourceDirectory + "/simpleinterop.def"
+            "-Wl,--retain-symbols-file=" + sourceDirectory + "/simple.def"
         ])
     }
 
     Group {
         name: "exports"
         files: [
-            "simpleinterop.def"
+            "simple.def"
         ]
     }
 
