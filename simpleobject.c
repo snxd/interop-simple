@@ -5,6 +5,7 @@
 #include "interoplib.h"
 
 #include "jansson.h"
+#include "jansson_private.h"
 
 #include "simpleobject.h"
 
@@ -16,7 +17,7 @@ typedef struct SimpleObjectStruct
     char                            InstanceId[40];
 
     // Object Data
-    int32                           IntProperty;
+    int64                           IntProperty;
     float64                         DblProperty;
     int32                           BoolProperty;
     char                            StringProperty[320];
@@ -54,8 +55,9 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     char *MethodName = NULL;
     char MethodResultString[MAX_JSON_STRINGLENGTH];
-    int32 MethodResultInt = 0;
-    double MethodResultDbl = 0;
+    int64 MethodResultInt = 0;
+    float64 MethodResultDbl = 0;
+    int32 MethodResultBool = 0;
     char *JSONDumpString = NULL;
     json_t *JSON = NULL;
     json_t *JSONReturnRoot = NULL;
@@ -66,18 +68,14 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     int32 RetVal = FALSE;
 
     memset(MethodResultString, 0, MAX_JSON_STRINGLENGTH);
-    JSON = json_loads(String, &JSONError);
+    JSON = json_loads(String, 0, &JSONError);
     if (JSON == FALSE)
-    {
         return FALSE;
-    }
 
     RetVal = (JSONMethod = json_object_get(JSON, "method")) != NULL;
 
     if (RetVal == TRUE)
-    {
         RetVal = json_is_string(JSONMethod);
-    }
 
     if (RetVal == TRUE)
     {
@@ -88,15 +86,9 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     if (RetVal == TRUE && strcmp(MethodName, "setIntProperty") == 0)
     {
         if (RetVal == TRUE)
-        {
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        }
-
         if (RetVal == TRUE)
-        {
             RetVal = json_is_integer(Parameter[0]);
-        }
-
         if (RetVal == TRUE)
         {
             SimpleObject_SetIntProperty(SimpleObjectContext, json_integer_value(Parameter[0]));
@@ -114,15 +106,9 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     else if (RetVal == TRUE && strcmp(MethodName, "setDblProperty") == 0)
     {
         if (RetVal == TRUE)
-        {
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        }
-
         if (RetVal == TRUE)
-        {
             RetVal = json_is_real(Parameter[0]);
-        }
-
         if (RetVal == TRUE)
         {
             SimpleObject_SetDblProperty(SimpleObjectContext, json_real_value(Parameter[0]));
@@ -140,15 +126,9 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     else if (RetVal == TRUE && strcmp(MethodName, "setBoolProperty") == 0)
     {
         if (RetVal == TRUE)
-        {
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        }
-
         if (RetVal == TRUE)
-        {
             RetVal = json_is_boolean(Parameter[0]);
-        }
-
         if (RetVal == TRUE)
         {
             SimpleObject_SetBoolProperty(SimpleObjectContext, json_is_true(Parameter[0]));
@@ -159,20 +139,16 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     {
         if (RetVal == TRUE)
         {
-            SimpleObject_GetBoolProperty(SimpleObject, &MethodResultInt);
-            RetVal = (JSONReturn = (MethodResultInt == TRUE) ? json_true() : json_false()) != NULL;
+            SimpleObject_GetBoolProperty(SimpleObject, &MethodResultBool);
+            RetVal = (JSONReturn = (MethodResultBool == TRUE) ? json_true() : json_false()) != NULL;
         }
     }
     else if (RetVal == TRUE && strcmp(MethodName, "setStringProperty") == 0)
     {
         if (RetVal == TRUE)
-        {
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        }
         if (RetVal == TRUE)
-        {
             RetVal = json_is_string(Parameter[0]);
-        }
         if (RetVal == TRUE)
         {
             SimpleObject_SetStringProperty(SimpleObject, (char*)json_string_value(Parameter[0]));
@@ -190,15 +166,9 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     else if (RetVal == TRUE && strcmp(MethodName, "raiseTrigger") == 0)
     {
         if (RetVal == TRUE)
-        {
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        }
-
         if (RetVal == TRUE)
-        {
             RetVal = json_is_integer(Parameter[0]);
-        }
-
         if (RetVal == TRUE)
         {
             SimpleObject_RaiseTrigger(SimpleObject, json_integer_value(Parameter[0]), MethodResultString, MAX_JSON_STRINGLENGTH);
@@ -208,42 +178,24 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
 
     // Set json return value
     if (RetVal == TRUE)
-    {
         RetVal = (JSONReturnRoot = json_object()) != NULL;
-    }
-
     if (RetVal == TRUE)
-    {
         RetVal = (json_object_set_new(JSONReturnRoot, "returnValue", JSONReturn) == 0);
-    }
 
     if (RetVal == TRUE)
-    {
         RetVal = (JSONDumpString = json_dumps(JSONReturnRoot, 0)) != NULL;
-    }
 
     if (RetVal == TRUE)
-    {
         RetVal = ((signed)strlen(JSONDumpString) < ResultStringLength);
-    }
-
     if (RetVal == TRUE)
-    {
         strncpy(ResultString, JSONDumpString, ResultStringLength);
-    }
 
     if (JSONDumpString != NULL)
-    {
-        free(JSONDumpString);
-    }
+        jsonp_free(JSONDumpString);
     if (JSONReturnRoot != NULL)
-    {
         json_decref(JSONReturnRoot);
-    }
     if (JSON != NULL)
-    {
         json_decref(JSON);
-    }
 
     return RetVal;
 }
@@ -259,14 +211,14 @@ int32 SimpleObject_ReleaseInstance(void **SimpleObjectContext)
 /*********************************************************************/
 // Concrete Functions
 
-int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int32 Property)
+int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int64 Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     SimpleObject->IntProperty = Property;
     return TRUE;
 }
 
-int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int32 *Property)
+int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int64 *Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     *Property = SimpleObject->IntProperty;
@@ -315,7 +267,7 @@ int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, 
     return TRUE;
 }
 
-int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int32 Value, char *ResultString, int32 MaxResultStringLength)
+int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int64 Value, char *ResultString, int32 MaxResultStringLength)
 {
     // This function calls onTrigger in the simpleobject.js file
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;

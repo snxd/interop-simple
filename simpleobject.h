@@ -18,8 +18,8 @@ int32 SimpleObject_ReleaseInstance(void **SimpleObjectContext);
 
 /*********************************************************************/
 
-int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int32 Property);
-int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int32 *Property);
+int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int64 Property);
+int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int64 *Property);
 
 int32 SimpleObject_SetDblProperty(void *SimpleObjectContext, float64 Property);
 int32 SimpleObject_GetDblProperty(void *SimpleObjectContext, float64 *Property);
@@ -30,7 +30,7 @@ int32 SimpleObject_GetBoolProperty(void *SimpleObjectContext, int32 *Property);
 int32 SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property);
 int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength);
 
-int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int32 Value, char *ResultString, int32 MaxResultStringLength);
+int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int64 Value, char *ResultString, int32 MaxResultStringLength);
 
 /*********************************************************************/
 

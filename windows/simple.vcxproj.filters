@@ -16,7 +16,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\simpleinterop.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simpleobject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\jansson\dump.c">
+      <Filter>JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\error.c">
       <Filter>JSON</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\hashtable.c">
@@ -25,7 +34,16 @@
     <ClCompile Include="..\jansson\load.c">
       <Filter>JSON</Filter>
     </ClCompile>
+    <ClCompile Include="..\jansson\memory.c">
+      <Filter>JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\pack_unpack.c">
+      <Filter>JSON</Filter>
+    </ClCompile>
     <ClCompile Include="..\jansson\strbuffer.c">
+      <Filter>JSON</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\strconv.c">
       <Filter>JSON</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\utf.c">
@@ -34,14 +52,20 @@
     <ClCompile Include="..\jansson\value.c">
       <Filter>JSON</Filter>
     </ClCompile>
-    <ClCompile Include="..\simpleinterop.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\simpleobject.c">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\jansson\hashtable_seed.c">
+      <Filter>JSON</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\interop\interoplib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\interopstub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\jansson\hashtable.h">
       <Filter>JSON</Filter>
     </ClInclude>
@@ -51,23 +75,14 @@
     <ClInclude Include="..\jansson\jansson_private.h">
       <Filter>JSON</Filter>
     </ClInclude>
+    <ClInclude Include="..\jansson\lookup3.h">
+      <Filter>JSON</Filter>
+    </ClInclude>
     <ClInclude Include="..\jansson\strbuffer.h">
       <Filter>JSON</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\utf.h">
       <Filter>JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\jansson\util.h">
-      <Filter>JSON</Filter>
-    </ClInclude>
-    <ClInclude Include="..\interop\interoplib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\interop\interopstub.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\simpleobject.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
