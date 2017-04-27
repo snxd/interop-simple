@@ -332,7 +332,7 @@ static int do_dump(const json_t *json, size_t flags, int depth,
 
             if(flags & JSON_SORT_KEYS)
             {
-                const char **keys;
+                char **keys;
                 size_t size, i;
 
                 size = json_object_size(json);
@@ -343,13 +343,13 @@ static int do_dump(const json_t *json, size_t flags, int depth,
                 i = 0;
                 while(iter)
                 {
-                    keys[i] = json_object_iter_key(iter);
+                    keys[i] = (char *)json_object_iter_key(iter);
                     iter = json_object_iter_next((json_t *)json, iter);
                     i++;
                 }
                 assert(i == size);
 
-                qsort(keys, size, sizeof(const char *), compare_keys);
+                qsort(keys, size, sizeof(char *), compare_keys);
 
                 for(i = 0; i < size; i++)
                 {
