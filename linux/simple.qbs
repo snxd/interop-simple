@@ -64,17 +64,23 @@ Product {
         name: "jansson"
         prefix: "../jansson/"
         files: [
+            "dump.c",
+            "error.c",
             "hashtable.h",
             "hashtable.c",
+            "hashtable_seed.c",
             "jansson.h",
+            "jansson_config.h",
             "jansson_private.h",
+            "load.c",
+            "lookup3.h",
+            "memory.c",
+            "pack_unpack.c",
             "strbuffer.h",
             "strbuffer.c",
+            "strconv.c",
             "utf.h",
             "utf.c",
-            "util.h",
-            "dump.c",
-            "load.c",
             "value.c"
         ]
     }
