@@ -51,7 +51,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>jansson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\jansson\;..\interop\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -69,7 +69,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>jansson;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\jansson\;..\interop\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -86,29 +86,30 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="jansson\dump.c" />
-    <ClCompile Include="jansson\hashtable.c" />
-    <ClCompile Include="jansson\load.c" />
-    <ClCompile Include="jansson\strbuffer.c" />
-    <ClCompile Include="jansson\utf.c" />
-    <ClCompile Include="jansson\value.c" />
-    <ClCompile Include="simpleinterop.c" />
-    <ClCompile Include="simpleobject.c" />
+    <ClCompile Include="..\jansson\dump.c" />
+    <ClCompile Include="..\jansson\hashtable.c" />
+    <ClCompile Include="..\jansson\load.c" />
+    <ClCompile Include="..\jansson\strbuffer.c" />
+    <ClCompile Include="..\jansson\utf.c" />
+    <ClCompile Include="..\jansson\value.c" />
+    <ClCompile Include="..\simpleinterop.c" />
+    <ClCompile Include="..\simpleobject.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="js\interoptestexample.js" />
-    <None Include="js\simpleobject.js" />
+    <ClInclude Include="..\interop\interoplib.h" />
+    <ClInclude Include="..\interop\interopstub.h" />
+    <ClInclude Include="..\jansson\hashtable.h" />
+    <ClInclude Include="..\jansson\jansson.h" />
+    <ClInclude Include="..\jansson\jansson_private.h" />
+    <ClInclude Include="..\jansson\strbuffer.h" />
+    <ClInclude Include="..\jansson\utf.h" />
+    <ClInclude Include="..\jansson\util.h" />
+    <ClInclude Include="..\simpleobject.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\js\simpleobject.js" />
+    <None Include="..\js\simpleobjecttest.js" />
     <None Include="simpleinterop.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="interoplib.h" />
-    <ClInclude Include="jansson\hashtable.h" />
-    <ClInclude Include="jansson\jansson.h" />
-    <ClInclude Include="jansson\jansson_private.h" />
-    <ClInclude Include="jansson\strbuffer.h" />
-    <ClInclude Include="jansson\utf.h" />
-    <ClInclude Include="jansson\util.h" />
-    <ClInclude Include="simpleobject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

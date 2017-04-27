@@ -16,66 +16,69 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="simpleinterop.c">
+    <ClCompile Include="..\jansson\dump.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\hashtable.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\load.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\strbuffer.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\utf.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jansson\value.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="..\simpleinterop.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="simpleobject.c">
+    <ClCompile Include="..\simpleobject.c">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="jansson\dump.c">
-      <Filter>JSON Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="jansson\hashtable.c">
-      <Filter>JSON Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="jansson\load.c">
-      <Filter>JSON Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="jansson\strbuffer.c">
-      <Filter>JSON Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="jansson\utf.c">
-      <Filter>JSON Parser</Filter>
-    </ClCompile>
-    <ClCompile Include="jansson\value.c">
-      <Filter>JSON Parser</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\jansson\hashtable.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jansson\jansson.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jansson\jansson_private.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jansson\strbuffer.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jansson\utf.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jansson\util.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\interoplib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\interopstub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simpleobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\js\simpleobject.js">
+      <Filter>Javascript</Filter>
+    </None>
+    <None Include="..\js\simpleobjecttest.js">
+      <Filter>Javascript</Filter>
+    </None>
     <None Include="simpleinterop.def">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="js\interoptestexample.js">
-      <Filter>Javascript</Filter>
-    </None>
-    <None Include="js\simpleobject.js">
-      <Filter>Javascript</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="jansson\hashtable.h">
-      <Filter>JSON Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="jansson\jansson.h">
-      <Filter>JSON Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="jansson\jansson_private.h">
-      <Filter>JSON Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="jansson\strbuffer.h">
-      <Filter>JSON Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="jansson\utf.h">
-      <Filter>JSON Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="jansson\util.h">
-      <Filter>JSON Parser</Filter>
-    </ClInclude>
-    <ClInclude Include="interoplib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="simpleobject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

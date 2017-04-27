@@ -1,7 +1,11 @@
 #pragma once
 
-#ifndef _SIMPLEINTEROP_H_
-#define _SIMPLEINTEROP_H_
+/*! \file interopstub.h
+ * Interop implementation functions
+ */
+
+#ifndef _INTEROPSTUB_H_
+#define _INTEROPSTUB_H_
 
 #ifdef __cplusplus
 extern "C" {
