@@ -3,75 +3,72 @@ function SimpleObject(instanceId) {
 }
 
 SimpleObject.prototype.release = function() {
+    this.releaseInstance();
+};
+SimpleObject.prototype.invoke = function(methodBinding) {
+    return interop.invoke(this.instanceId, methodBinding);
+};
+SimpleObject.prototype.releaseInstance = function() {
     interop.releaseInstance(this.instanceId);
 };
 
 SimpleObject.prototype.getIntProperty = function() {
-    var methodBinding = {
+    return this.invoke({
         "method": "getIntProperty"
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.setIntProperty = function(value) {
-    var methodBinding = {
+    return this.invoke({
         "method": "setIntProperty",
         "value": value
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.getDblProperty = function() {
-    var methodBinding = {
+    return this.invoke({
         "method": "getDblProperty"
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.setDblProperty = function(value) {
-    var methodBinding = {
+    return this.invoke({
         "method": "setDblProperty",
         "value": value
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.getBoolProperty = function() {
-    var methodBinding = {
+    return this.invoke({
         "method": "getBoolProperty"
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.setBoolProperty = function(value) {
-    var methodBinding = {
+    return this.invoke({
         "method": "setBoolProperty",
         "value": value
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.getStringProperty = function() {
-    var methodBinding = {
+    return this.invoke({
         "method": "getStringProperty"
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.setStringProperty = function(value) {
-    var methodBinding = {
+    return this.invoke({
         "method": "setStringProperty",
         "value": value
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 SimpleObject.prototype.raiseTrigger = function(value) {
-    var methodBinding = {
+    return this.invoke({
         "method": "raiseTrigger",
         "value": value
-    };
-    return interop.invoke(this.instanceId, methodBinding);
+    });
 };
 
 function createSimpleObject(instanceId) {

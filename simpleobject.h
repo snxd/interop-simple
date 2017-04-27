@@ -7,17 +7,9 @@
 extern "C" {
 #endif
 
-#ifndef FALSE
-#define FALSE   (0)
-#endif
-
-#ifndef TRUE
-#define TRUE    (1)
-#endif
-
 /*********************************************************************/
 
-void SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString);
+int32 SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString);
 
 // Interop Callbacks
 int32 SimpleObject_ProcessInstance(void *SimpleObjectContext);
@@ -26,24 +18,24 @@ int32 SimpleObject_ReleaseInstance(void **SimpleObjectContext);
 
 /*********************************************************************/
 
-void SimpleObject_SetIntProperty(void *SimpleObjectContext, int Property);
-void SimpleObject_GetIntProperty(void *SimpleObjectContext, int *Property);
+int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int32 Property);
+int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int32 *Property);
 
-void SimpleObject_SetDblProperty(void *SimpleObjectContext, double Property);
-void SimpleObject_GetDblProperty(void *SimpleObjectContext, double *Property);
+int32 SimpleObject_SetDblProperty(void *SimpleObjectContext, float64 Property);
+int32 SimpleObject_GetDblProperty(void *SimpleObjectContext, float64 *Property);
 
-void SimpleObject_SetBoolProperty(void *SimpleObjectContext, int Property);
-void SimpleObject_GetBoolProperty(void *SimpleObjectContext, int *Property);
+int32 SimpleObject_SetBoolProperty(void *SimpleObjectContext, int32 Property);
+int32 SimpleObject_GetBoolProperty(void *SimpleObjectContext, int32 *Property);
 
-void SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property);
-void SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength);
+int32 SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property);
+int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength);
 
 int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int32 Value, char *ResultString, int32 MaxResultStringLength);
 
 /*********************************************************************/
 
-void SimpleObject_Create(void **SimpleObjectContext);
-void SimpleObject_Delete(void **SimpleObjectContext);
+int32 SimpleObject_Create(void **SimpleObjectContext);
+int32 SimpleObject_Delete(void **SimpleObjectContext);
 
 /*********************************************************************/
 

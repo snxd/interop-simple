@@ -1,8 +1,7 @@
 #include <string.h>
 #include <malloc.h>
 
-#include "interop/interoptypes.h"
-#include "interop/interoplib.h"
+#include "interoplib.h"
 
 #include "jansson.h"
 
@@ -16,15 +15,13 @@ typedef struct SimpleObjectStruct
     char                            InstanceId[40];
 
     // Object Data
-    int                             IntProperty;
-    double                          DblProperty;
-    int                             BoolProperty;
+    int32                           IntProperty;
+    float64                         DblProperty;
+    int32                           BoolProperty;
     char                            StringProperty[320];
 } SimpleObjectStruct;
 
 /********************************************************************/
-
-#define MAX_PARAMETERS (10)
 
 extern NotificationCenter_FireWithJSONCallback NotificationCenter_FireWithJSON;
 extern NotificationCenter_FireAfterDelayWithJSONCallback NotificationCenter_FireAfterDelayWithJSON;
@@ -33,10 +30,11 @@ extern Interop_GenerateInstanceIdCallback Interop_GenerateInstanceId;
 /********************************************************************/
 // Interop Functions
 
-void SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString)
+int32 SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     strncpy(String, SimpleObject->InstanceId, MaxString);
+    return TRUE;
 }
 
 int32 SimpleObject_ProcessInstance(void *SimpleObjectContext)
@@ -49,8 +47,8 @@ int32 SimpleObject_ProcessInstance(void *SimpleObjectContext)
 
 int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char *ResultString, int32 ResultStringLength)
 {
-    // EVERYTHING is marshalled in AND out as a JSON string, use any type supported by JSON and
-    // it should marhsal ok.
+    // EVERYTHING is marshaled in AND out as a JSON string, use any type supported by JSON and
+    // it should marshal ok.
 
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     char *MethodName = NULL;
@@ -62,7 +60,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     json_t *JSONReturnRoot = NULL;
     json_t *JSONReturn = NULL;
     json_t *JSONMethod = NULL;
-    json_t *Parameter[MAX_PARAMETERS];
+    json_t *Parameter[MAX_JSON_PARAMETERS];
     json_error_t JSONError;
     int32 RetVal = FALSE;
 
@@ -260,52 +258,60 @@ int32 SimpleObject_ReleaseInstance(void **SimpleObjectContext)
 /*********************************************************************/
 // Concrete Functions
 
-void SimpleObject_SetIntProperty(void *SimpleObjectContext, int Property)
+int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int32 Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     SimpleObject->IntProperty = Property;
+    return TRUE;
 }
 
-void SimpleObject_GetIntProperty(void *SimpleObjectContext, int *Property)
+int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int32 *Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     *Property = SimpleObject->IntProperty;
+    return TRUE;
 }
 
-void SimpleObject_SetDblProperty(void *SimpleObjectContext, double Property)
+int32 SimpleObject_SetDblProperty(void *SimpleObjectContext, float64 Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     SimpleObject->DblProperty = Property;
+    return TRUE;
 }
 
-void SimpleObject_GetDblProperty(void *SimpleObjectContext, double *Property)
+int32 SimpleObject_GetDblProperty(void *SimpleObjectContext, float64 *Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     *Property = SimpleObject->DblProperty;
+    return TRUE;
 }
 
-void SimpleObject_SetBoolProperty(void *SimpleObjectContext, int Property)
+int32 SimpleObject_SetBoolProperty(void *SimpleObjectContext, int32 Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     SimpleObject->BoolProperty = Property;
+    return TRUE;
 }
 
-void SimpleObject_GetBoolProperty(void *SimpleObjectContext, int *Property)
+int32 SimpleObject_GetBoolProperty(void *SimpleObjectContext, int32 *Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     *Property = SimpleObject->BoolProperty;
+    return TRUE;
 }
 
-void SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property)
+int32 SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     strncpy(SimpleObject->StringProperty, Property, 320);
+    return TRUE;
 }
 
-void SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength)
+int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     strncpy(Property, SimpleObject->StringProperty, MaxPropertyLength);
+    return TRUE;
 }
 
 int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int32 Value, char *ResultString, int32 MaxResultStringLength)
@@ -324,27 +330,31 @@ int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int32 Value, char *Re
 /*********************************************************************/
 // Creation/Deletion Functions
 
-void SimpleObject_Create(void **SimpleObjectContext)
+int32 SimpleObject_Create(void **SimpleObjectContext)
 {
     SimpleObjectStruct *SimpleObject = NULL;
 
     SimpleObject = (SimpleObjectStruct *)malloc(sizeof(SimpleObjectStruct));
     Interop_GenerateInstanceId(SimpleObject->InstanceId, 40);
+
     SimpleObject->IntProperty = 0;
     SimpleObject->DblProperty = 0.f;
     SimpleObject->BoolProperty = FALSE;
+
     memset(SimpleObject->StringProperty, 0, 320);
 
     *SimpleObjectContext = SimpleObject;
+    return TRUE;
 }
 
-void SimpleObject_Delete(void **SimpleObjectContext)
+int32 SimpleObject_Delete(void **SimpleObjectContext)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)*SimpleObjectContext;
 
     free(SimpleObject);
 
     *SimpleObjectContext = NULL;
+    return TRUE;
 }
 
 /*********************************************************************/

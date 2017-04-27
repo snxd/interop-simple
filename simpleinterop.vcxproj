@@ -101,6 +101,7 @@
     <None Include="simpleinterop.def" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="interoplib.h" />
     <ClInclude Include="jansson\hashtable.h" />
     <ClInclude Include="jansson\jansson.h" />
     <ClInclude Include="jansson\jansson_private.h" />

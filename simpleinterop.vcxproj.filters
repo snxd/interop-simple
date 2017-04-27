@@ -11,6 +11,9 @@
     <Filter Include="Javascript">
       <UniqueIdentifier>{e1f118e7-d380-4e04-a25a-3f4c389d47a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7ad75dbd-ddfe-4f4e-a536-adcc5ff765b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="simpleinterop.c">
@@ -50,9 +53,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="simpleobject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="jansson\hashtable.h">
       <Filter>JSON Parser</Filter>
     </ClInclude>
@@ -70,6 +70,12 @@
     </ClInclude>
     <ClInclude Include="jansson\util.h">
       <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="interoplib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="simpleobject.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
