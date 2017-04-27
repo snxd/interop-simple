@@ -1,4 +1,4 @@
-Simple Interop Example
+## Simple Interop Example
 
 1. Open simpleinterop.sln in Visual Studio 2013
 2. Select "Debug" and rebuild solution
