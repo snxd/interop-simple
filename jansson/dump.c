@@ -16,6 +16,11 @@
 #include "strbuffer.h"
 #include "utf.h"
 
+#ifdef _WINDOWS
+#define snprintf _snprintf
+#define strdup _strdup
+#endif
+
 #define MAX_INTEGER_STR_LENGTH  100
 #define MAX_REAL_STR_LENGTH     100
 
@@ -185,7 +190,7 @@ static int do_dump(const json_t *json, unsigned long flags, int depth,
             char buffer[MAX_INTEGER_STR_LENGTH];
             int size;
 
-            size = _snprintf(buffer, MAX_INTEGER_STR_LENGTH, "%d", json_integer_value(json));
+            size = snprintf(buffer, MAX_INTEGER_STR_LENGTH, "%d", json_integer_value(json));
             if(size >= MAX_INTEGER_STR_LENGTH)
                 return -1;
 
@@ -197,7 +202,7 @@ static int do_dump(const json_t *json, unsigned long flags, int depth,
             char buffer[MAX_REAL_STR_LENGTH];
             int size;
 
-            size = _snprintf(buffer, MAX_REAL_STR_LENGTH, "%.17g",
+            size = snprintf(buffer, MAX_REAL_STR_LENGTH, "%.17g",
                             json_real_value(json));
             if(size >= MAX_REAL_STR_LENGTH)
                 return -1;
@@ -431,7 +436,7 @@ char *json_dumps(const json_t *json, unsigned long flags)
         return NULL;
     }
 
-    result = _strdup(strbuffer_value(&strbuff));
+    result = strdup(strbuffer_value(&strbuff));
     strbuffer_close(&strbuff);
 
     return result;

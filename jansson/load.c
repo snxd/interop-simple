@@ -20,6 +20,10 @@
 #include "strbuffer.h"
 #include "utf.h"
 
+#ifdef _WINDOWS
+#define snprintf _snprintf
+#endif
+
 #define TOKEN_INVALID         -1
 #define TOKEN_EOF              0
 #define TOKEN_STRING         256
@@ -91,22 +95,22 @@ static void error_set(json_error_t *error, const lex_t *lex,
         if(saved_text && saved_text[0])
         {
             if(lex->saved_text.length <= 20) {
-                _snprintf(error->text, JSON_ERROR_TEXT_LENGTH,
+                snprintf(error->text, JSON_ERROR_TEXT_LENGTH,
                          "%s near '%s'", text, saved_text);
             }
             else
-                _snprintf(error->text, JSON_ERROR_TEXT_LENGTH, "%s", text);
+                snprintf(error->text, JSON_ERROR_TEXT_LENGTH, "%s", text);
         }
         else
         {
-            _snprintf(error->text, JSON_ERROR_TEXT_LENGTH,
+            snprintf(error->text, JSON_ERROR_TEXT_LENGTH,
                      "%s near end of file", text);
         }
     }
     else
     {
         error->line = -1;
-        _snprintf(error->text, JSON_ERROR_TEXT_LENGTH, "%s", text);
+        snprintf(error->text, JSON_ERROR_TEXT_LENGTH, "%s", text);
     }
 }
 

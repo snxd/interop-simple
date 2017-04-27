@@ -8,10 +8,6 @@
 #ifndef UTF_H
 #define UTF_H
 
-#if !defined(__APPLE__)
-typedef signed long int int32_t;
-#endif 
-
 int utf8_encode(int codepoint, char *buffer, int *size);
 
 int utf8_check_first(char byte);
