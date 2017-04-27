@@ -11,7 +11,7 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{7ad75dbd-ddfe-4f4e-a536-adcc5ff765b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="JSON">
+    <Filter Include="Jansson">
       <UniqueIdentifier>{85f94474-8605-40b9-a43c-0bfafc30059b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -23,37 +23,37 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\dump.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\error.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\hashtable.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\load.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\memory.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\pack_unpack.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\strbuffer.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\strconv.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\utf.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\value.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\hashtable_seed.c">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,22 +67,22 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\hashtable.h">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\jansson.h">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\jansson_private.h">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\lookup3.h">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\strbuffer.h">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\utf.h">
-      <Filter>JSON</Filter>
+      <Filter>Jansson</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
