@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="JSON Parser">
+      <UniqueIdentifier>{85f94474-8605-40b9-a43c-0bfafc30059b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Javascript">
+      <UniqueIdentifier>{e1f118e7-d380-4e04-a25a-3f4c389d47a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="simpleinterop.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="simpleobject.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jansson\dump.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="jansson\hashtable.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="jansson\load.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="jansson\strbuffer.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="jansson\utf.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+    <ClCompile Include="jansson\value.c">
+      <Filter>JSON Parser</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="simpleinterop.def">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="js\interoptestexample.js">
+      <Filter>Javascript</Filter>
+    </None>
+    <None Include="js\simpleobject.js">
+      <Filter>Javascript</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="simpleobject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jansson\hashtable.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="jansson\jansson.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="jansson\jansson_private.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="jansson\strbuffer.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="jansson\utf.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+    <ClInclude Include="jansson\util.h">
+      <Filter>JSON Parser</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
