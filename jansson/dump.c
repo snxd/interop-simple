@@ -61,8 +61,8 @@ static int dump_to_file(const char *buffer, size_t size, void *data)
 
 static int dump_to_fd(const char *buffer, size_t size, void *data)
 {
-    int *dest = (int *)data;
 #ifdef HAVE_UNISTD_H
+    int *dest = (int *)data;
     if(write(*dest, buffer, size) == (ssize_t)size)
         return 0;
 #endif
@@ -101,7 +101,7 @@ static int dump_indent(size_t flags, int depth, int space, json_dump_callback_t 
 static int dump_string(const char *str, size_t len, json_dump_callback_t dump, void *data, size_t flags)
 {
     const char *pos, *end, *lim;
-    int32_t codepoint;
+    int32_t codepoint = 0;
 
     if(dump("\"", 1, data))
         return -1;
