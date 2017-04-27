@@ -73,7 +73,7 @@
 		D82D5F801EB2786900EA3BF5 = {
 			isa = PBXGroup;
 			children = (
-				D82D5F9C1EB27A5100EA3BF5 /* JSON */,
+				D82D5F9C1EB27A5100EA3BF5 /* Jansson */,
 				D82D5F971EB278BF00EA3BF5 /* Interop */,
 				D82D5F901EB278AF00EA3BF5 /* Sources */,
 				D82D5F8A1EB2786900EA3BF5 /* Products */,
@@ -107,7 +107,7 @@
 			name = Interop;
 			sourceTree = "<group>";
 		};
-		D82D5F9C1EB27A5100EA3BF5 /* JSON */ = {
+		D82D5F9C1EB27A5100EA3BF5 /* Jansson */ = {
 			isa = PBXGroup;
 			children = (
 				D867CDAD1EB2961400F7CEF7 /* dump.c */,
@@ -129,7 +129,7 @@
 				D867CDBD1EB2961400F7CEF7 /* utf.h */,
 				D867CDBE1EB2961400F7CEF7 /* value.c */,
 			);
-			name = JSON;
+			name = Jansson;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
