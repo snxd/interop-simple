@@ -102,6 +102,7 @@
     <ClCompile Include="..\simpleobject.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\interop\dictionaryi.h" />
     <ClInclude Include="..\interop\interoplib.h" />
     <ClInclude Include="..\interop\interopstub.h" />
     <ClInclude Include="..\interop\taski.h" />

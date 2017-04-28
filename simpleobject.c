@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "interoplib.h"
+#include "dictionaryi.h"
 
 #include "jansson.h"
 #include "jansson_private.h"
@@ -13,26 +14,137 @@
 
 typedef struct SimpleObjectStruct
 {
-    // Interop Storage Data : Guids are 32 bytes long - I need the null (so I rounded up to the next 64-bit value which is 40)
-    char                            InstanceId[40];
+    // Interop Storage Data
+    ClassStruct                     Class;
 
     // Object Data
-    int64                           IntProperty;
-    float64                         DblProperty;
-    int32                           BoolProperty;
+    int64                           Int64Property;
+    float64                         Float64Property;
+    int32                           BooleanProperty;
     char                            StringProperty[320];
 } SimpleObjectStruct;
 
 /********************************************************************/
+// Notification Functions
+
+int32 SimpleObject_Notification_OnUpdate(void *UserPtr, char *Type, char *Notification, void *Sender, echandle DictionaryHandle)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)UserPtr;
+    float64 ValueFloat = 0;
+    int64 ValueInt64 = 0;
+    int32 ValueInt32 = 0;
+    char *ValuePtr = NULL;
+
+    if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == TRUE)
+        SimpleObject_SetStringProperty(SimpleObject, ValuePtr);
+    if (IDictionary_GetFloat64ByKey(DictionaryHandle, "Float64", &ValueFloat) == TRUE)
+        SimpleObject_SetFloat64Property(SimpleObject, ValueFloat);
+    if (IDictionary_GetInt64ByKey(DictionaryHandle, "Int64", &ValueInt64) == TRUE)
+        SimpleObject_SetInt64Property(SimpleObject, ValueInt64);
+    if (IDictionary_GetBooleanByKey(DictionaryHandle, "Boolean", &ValueInt32) == TRUE)
+        SimpleObject_SetBooleanProperty(SimpleObject, ValueInt32);
+    return TRUE;
+}
+
+/********************************************************************/
+// Concrete Functions
+
+int32 SimpleObject_SetInt64Property(void *SimpleObjectContext, int64 Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    int64 OldProperty = SimpleObject->Int64Property;
+
+    SimpleObject->Int64Property = Property;
+
+    NotificationCenter_FireAfterDelayWithJSON("SimpleObject", "Changed", SimpleObject, 0, 
+        "{ \"newValue\": %lld, \"oldValue\": %lld }", SimpleObject->Int64Property, OldProperty);
+
+    return TRUE;
+}
+
+int32 SimpleObject_GetInt64Property(void *SimpleObjectContext, int64 *Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    *Property = SimpleObject->Int64Property;
+    return TRUE;
+}
+
+int32 SimpleObject_SetFloat64Property(void *SimpleObjectContext, float64 Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    float64 OldProperty = SimpleObject->Float64Property;
+
+    SimpleObject->Float64Property = Property;
+
+    NotificationCenter_FireAfterDelayWithJSON("SimpleObject", "Changed", SimpleObject, 0, 
+        "{ \"newValue\": %g, \"oldValue\": %g }", SimpleObject->Float64Property, OldProperty);
+
+    return TRUE;
+}
+
+int32 SimpleObject_GetFloat64Property(void *SimpleObjectContext, float64 *Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    *Property = SimpleObject->Float64Property;
+    return TRUE;
+}
+
+int32 SimpleObject_SetBooleanProperty(void *SimpleObjectContext, int32 Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    int32 OldProperty = SimpleObject->BooleanProperty;
+
+    SimpleObject->BooleanProperty = Property;
+
+    NotificationCenter_FireAfterDelayWithJSON("SimpleObject", "Changed", SimpleObject, 0, 
+        "{ \"newValue\": %s, \"oldValue\": %s }", SimpleObject->BooleanProperty ? "true" : "false", 
+        OldProperty ? "true" : "false");
+
+    return TRUE;
+}
+
+int32 SimpleObject_GetBooleanProperty(void *SimpleObjectContext, int32 *Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    *Property = SimpleObject->BooleanProperty;
+    return TRUE;
+}
+
+int32 SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    char OldProperty[320] = { 0 };
+
+    String_CopyLength(OldProperty, SimpleObject->StringProperty, 320);
+    String_CopyLength(SimpleObject->StringProperty, Property, 320);
+    
+    // FireWithJSON format: use %js for javascript string - automatically escapes string
+    // Use after delay because I don't need it to wait for the return
+
+    NotificationCenter_FireAfterDelayWithJSON("SimpleObject", "Changed", SimpleObject, 0, 
+        "{ \"newValue\": \"%js\", \"oldValue\": \"%js\" }", SimpleObject->StringProperty, OldProperty);
+
+    return TRUE;
+}
+
+int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    String_CopyLength(Property, SimpleObject->StringProperty, MaxPropertyLength);
+    return TRUE;
+}
+
+/*********************************************************************/
+// Interop Functions
 
 int32 SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    strncpy(String, SimpleObject->InstanceId, MaxString);
+    String_CopyLength(String, Class_InstanceId(SimpleObject), MaxString);
     return TRUE;
 }
 
-int32 SimpleObject_ProcessInstance(void *SimpleObjectContext)
+int32 SimpleObject_Process(void *SimpleObjectContext)
 {
     // This function is called once per tick and can be used to process simple operations and
     // thread synchronization.
@@ -40,7 +152,7 @@ int32 SimpleObject_ProcessInstance(void *SimpleObjectContext)
     return TRUE;
 }
 
-int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char *ResultString, int32 ResultStringLength)
+int32 SimpleObject_Invoke(void *SimpleObjectContext, char *String, char *ResultString, int32 ResultStringLength)
 {
     // EVERYTHING is marshaled in AND out as a JSON string, use any type supported by JSON and
     // it should marshal ok.
@@ -76,7 +188,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
         RetVal = MethodName != NULL;
     }
 
-    if (RetVal == TRUE && String_Compare(MethodName, "setIntProperty") == TRUE)
+    if (RetVal == TRUE && String_Compare(MethodName, "setInt64Property") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -84,19 +196,19 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = json_is_integer(Parameter[0]);
         if (RetVal == TRUE)
         {
-            SimpleObject_SetIntProperty(SimpleObjectContext, json_integer_value(Parameter[0]));
+            SimpleObject_SetInt64Property(SimpleObjectContext, json_integer_value(Parameter[0]));
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getIntProperty") == TRUE)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getInt64Property") == TRUE)
     {
         if (RetVal == TRUE)
         {
-            SimpleObject_GetIntProperty(SimpleObject, &MethodResultInt);
+            SimpleObject_GetInt64Property(SimpleObject, &MethodResultInt);
             RetVal = (JSONReturn = json_integer(MethodResultInt)) != NULL;
         }
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "setDblProperty") == TRUE)
+    else if (RetVal == TRUE && String_Compare(MethodName, "setFloat64Property") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -104,19 +216,19 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = json_is_real(Parameter[0]);
         if (RetVal == TRUE)
         {
-            SimpleObject_SetDblProperty(SimpleObjectContext, json_real_value(Parameter[0]));
+            SimpleObject_SetFloat64Property(SimpleObjectContext, json_real_value(Parameter[0]));
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getDblProperty") == TRUE)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getFloat64Property") == TRUE)
     {
         if (RetVal == TRUE)
         {
-            SimpleObject_GetDblProperty(SimpleObject, &MethodResultDbl);
+            SimpleObject_GetFloat64Property(SimpleObject, &MethodResultDbl);
             RetVal = (JSONReturn = json_real(MethodResultDbl)) != NULL;
         }
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "setBoolProperty") == TRUE)
+    else if (RetVal == TRUE && String_Compare(MethodName, "setBooleanProperty") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -124,15 +236,15 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = json_is_boolean(Parameter[0]);
         if (RetVal == TRUE)
         {
-            SimpleObject_SetBoolProperty(SimpleObjectContext, json_is_true(Parameter[0]));
+            SimpleObject_SetBooleanProperty(SimpleObjectContext, json_is_true(Parameter[0]));
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getBoolProperty") == TRUE)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getBooleanProperty") == TRUE)
     {
         if (RetVal == TRUE)
         {
-            SimpleObject_GetBoolProperty(SimpleObject, &MethodResultBool);
+            SimpleObject_GetBooleanProperty(SimpleObject, &MethodResultBool);
             RetVal = (JSONReturn = json_boolean(MethodResultBool)) != NULL;
         }
     }
@@ -153,18 +265,6 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
         if (RetVal == TRUE)
         {
             SimpleObject_GetStringProperty(SimpleObject, MethodResultString, MAX_JSON_STRINGLENGTH);
-            RetVal = (JSONReturn = json_string(MethodResultString)) != NULL;
-        }
-    }
-    else if (RetVal == TRUE && String_Compare(MethodName, "raiseTrigger") == TRUE)
-    {
-        if (RetVal == TRUE)
-            RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        if (RetVal == TRUE)
-            RetVal = json_is_integer(Parameter[0]);
-        if (RetVal == TRUE)
-        {
-            SimpleObject_RaiseTrigger(SimpleObject, json_integer_value(Parameter[0]), MethodResultString, MAX_JSON_STRINGLENGTH);
             RetVal = (JSONReturn = json_string(MethodResultString)) != NULL;
         }
     }
@@ -193,86 +293,6 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
     return RetVal;
 }
 
-int32 SimpleObject_ReleaseInstance(void **SimpleObjectContext)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)*SimpleObjectContext;
-    SimpleObject_Delete((void *)&SimpleObject);
-    *SimpleObjectContext = NULL;
-    return TRUE;
-}
-
-/*********************************************************************/
-// Concrete Functions
-
-int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int64 Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    SimpleObject->IntProperty = Property;
-    return TRUE;
-}
-
-int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int64 *Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    *Property = SimpleObject->IntProperty;
-    return TRUE;
-}
-
-int32 SimpleObject_SetDblProperty(void *SimpleObjectContext, float64 Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    SimpleObject->DblProperty = Property;
-    return TRUE;
-}
-
-int32 SimpleObject_GetDblProperty(void *SimpleObjectContext, float64 *Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    *Property = SimpleObject->DblProperty;
-    return TRUE;
-}
-
-int32 SimpleObject_SetBoolProperty(void *SimpleObjectContext, int32 Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    SimpleObject->BoolProperty = Property;
-    return TRUE;
-}
-
-int32 SimpleObject_GetBoolProperty(void *SimpleObjectContext, int32 *Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    *Property = SimpleObject->BoolProperty;
-    return TRUE;
-}
-
-int32 SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    strncpy(SimpleObject->StringProperty, Property, 320);
-    return TRUE;
-}
-
-int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength)
-{
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-    strncpy(Property, SimpleObject->StringProperty, MaxPropertyLength);
-    return TRUE;
-}
-
-int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int64 Value, char *ResultString, int32 MaxResultStringLength)
-{
-    // This function calls onTrigger in the simpleobject.js file
-    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
-
-    // FireWithJSON format: use %js for javascript string - automatically escapes string
-    // Use after delay because I don't need it to wait for the return
-    NotificationCenter_FireAfterDelayWithJSON("SimpleObject", "Trigger", SimpleObject->InstanceId, 0,
-        "{ \"value\": %d }", Value);
-
-    return TRUE;
-}
-
 /*********************************************************************/
 // Creation/Deletion Functions
 
@@ -281,11 +301,14 @@ int32 SimpleObject_Create(void **SimpleObjectContext)
     SimpleObjectStruct *SimpleObject = NULL;
 
     SimpleObject = (SimpleObjectStruct *)malloc(sizeof(SimpleObjectStruct));
-    Interop_GenerateInstanceId(SimpleObject->InstanceId, 40);
+    Interop_GenerateInstanceId(SimpleObject->Class.InstanceId, 40);
 
-    SimpleObject->IntProperty = 0;
-    SimpleObject->DblProperty = 0.f;
-    SimpleObject->BoolProperty = FALSE;
+    SimpleObject->Class.RefCount = 1;
+    SimpleObject->Int64Property = 0;
+    SimpleObject->Float64Property = 0.f;
+    SimpleObject->BooleanProperty = FALSE;
+
+    NotificationCenter_AddInstanceObserver("SimpleObject", "Update", SimpleObject, SimpleObject, SimpleObject_Notification_OnUpdate);
 
     memset(SimpleObject->StringProperty, 0, 320);
 
@@ -293,11 +316,22 @@ int32 SimpleObject_Create(void **SimpleObjectContext)
     return TRUE;
 }
 
-int32 SimpleObject_Delete(void **SimpleObjectContext)
+void *SimpleObject_AddRef(void *SimpleObjectContext)
+{
+    SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
+    SimpleObject->Class.RefCount += 1;
+    return SimpleObject;
+}
+
+int32 SimpleObject_Release(void **SimpleObjectContext)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)*SimpleObjectContext;
 
-    free(SimpleObject);
+    if (--SimpleObject->Class.RefCount == 0)
+    {
+        NotificationCenter_RemoveInstanceObserver("SimpleObject", "Update", SimpleObject, SimpleObject, SimpleObject_Notification_OnUpdate);
+        free(SimpleObject);
+    }
 
     *SimpleObjectContext = NULL;
     return TRUE;

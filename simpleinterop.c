@@ -15,17 +15,18 @@ int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdL
 {
     void *Context;
 
-    if (strcmp(TypeName, "Simple.SimpleObject") == 0)
+    if (String_Compare(TypeName, "Simple.SimpleObject") == TRUE)
     {
-        *InvokeInstance = SimpleObject_InvokeInstance;
-        *ReleaseInstance = SimpleObject_ReleaseInstance;
+        SimpleObject_Create(&Context);
+        SimpleObject_GetInstanceId(Context, InstanceId, InstanceIdLength);
+
+        *InvokeInstance = SimpleObject_Invoke;
+        *ReleaseInstance = SimpleObject_Release;
         *ProcessInstance = NULL;
 
         // Comment this line in if you want the process call
         // *ProcessInstance = SimpleObject_ProcessInstance;
 
-        SimpleObject_Create(&Context);
-        SimpleObject_GetInstanceId(Context, InstanceId, InstanceIdLength);
         *UserPtr = Context;
         return TRUE;
     }

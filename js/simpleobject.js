@@ -19,17 +19,17 @@ SimpleObject.prototype.releaseInstance = function() {
 /**
  * Gets an integer value
  */
-SimpleObject.prototype.getIntProperty = function() {
+SimpleObject.prototype.getInt64Property = function() {
     return this.invoke({
-        "method": "getIntProperty"
+        "method": "getInt64Property"
     });
 };
 /**
  * Sets an integer value
  */
-SimpleObject.prototype.setIntProperty = function(value) {
+SimpleObject.prototype.setInt64Property = function(value) {
     return this.invoke({
-        "method": "setIntProperty",
+        "method": "setInt64Property",
         "value": value
     });
 };
@@ -37,18 +37,18 @@ SimpleObject.prototype.setIntProperty = function(value) {
 /**
  * Gets a double value
  */
-SimpleObject.prototype.getDblProperty = function() {
+SimpleObject.prototype.getFloat64Property = function() {
     return this.invoke({
-        "method": "getDblProperty"
+        "method": "getFloat64Property"
     });
 };
 
 /**
  * Sets a double value
  */
-SimpleObject.prototype.setDblProperty = function(value) {
+SimpleObject.prototype.setFloat64Property = function(value) {
     return this.invoke({
-        "method": "setDblProperty",
+        "method": "setFloat64Property",
         "value": value
     });
 };
@@ -56,18 +56,18 @@ SimpleObject.prototype.setDblProperty = function(value) {
 /**
  * Gets a boolean value
  */
-SimpleObject.prototype.getBoolProperty = function() {
+SimpleObject.prototype.getBooleanProperty = function() {
     return this.invoke({
-        "method": "getBoolProperty"
+        "method": "getBooleanProperty"
     });
 };
 
 /**
  * Sets a boolean value
  */
-SimpleObject.prototype.setBoolProperty = function(value) {
+SimpleObject.prototype.setBooleanProperty = function(value) {
     return this.invoke({
-        "method": "setBoolProperty",
+        "method": "setBooleanProperty",
         "value": value
     });
 };
@@ -87,16 +87,6 @@ SimpleObject.prototype.getStringProperty = function() {
 SimpleObject.prototype.setStringProperty = function(value) {
     return this.invoke({
         "method": "setStringProperty",
-        "value": value
-    });
-};
-
-/**
- * Raises a notification
- */
-SimpleObject.prototype.raiseTrigger = function(value) {
-    return this.invoke({
-        "method": "raiseTrigger",
         "value": value
     });
 };

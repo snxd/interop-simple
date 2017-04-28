@@ -1,37 +1,54 @@
 // Remember to add simpleobject.js to your HTML scripts
 (function () {
-    function simpleInteropLoaded() {
-        var testSimple = createSimpleObject();
-        console.log("SimpleObject instanceId: " + testSimple.instanceId);
+    var simple = null;
+    var observer = null;
+    
+    function interopLoaded() {
 
-        testSimple.setIntProperty(406);
-        console.log("SimpleObject getIntProperty: " + testSimple.getIntProperty());
+        //notificationCenter.verbose = true;
+        //interop.verbose = true;
+        
+        var simple = createSimpleObject();
 
-        testSimple.setDblProperty(40.1);
-        console.log("SimpleObject getDblProperty: " + testSimple.getDblProperty());
-
-        testSimple.setBoolProperty(true);
-        console.log("SimpleObject getBoolProperty: " + testSimple.getBoolProperty());
-
-        testSimple.setStringProperty("String Test");
-        console.log("SimpleObject getStringProperty: " + testSimple.getStringProperty());
-
-        var observer = notificationCenter.addInstanceObserver("SimpleObject", "Trigger", testSimple, function (sender, info) {
-            observer.release();
-
-            console.log("SimpleObject Trigger: " + info.value);
-            console.log("SimpleObject Trigger getStringProperty: " + sender.getStringProperty());
-
-            // Make sure to release the object or else it will cause a memory leak
-            testSimple.release();
+        // Watch for changes in object
+        observer = notificationCenter.addInstanceObserver("SimpleObject", "Changed", simple, function (sender, info) {
+            console.log("SimpleObject Changed - {0} -> {1}".format(info.oldValue, info.newValue));
         });
-
-        testSimple.raiseTrigger(42);
+        
+        console.log("SimpleObject InstanceId - " + simple.instanceId);
+        simple.setInt64Property(406);
+        console.log("SimpleObject Int64 - " + simple.getInt64Property());
+        simple.setFloat64Property(40.1);
+        console.log("SimpleObject Float64 - " + simple.getFloat64Property());
+        simple.setBooleanProperty(true);
+        console.log("SimpleObject Boolean - " + simple.getBooleanProperty());
+        simple.setStringProperty("String Test");
+        console.log("SimpleObject String - " + simple.getStringProperty());
+        
+        // Send changes to object through notification center
+        notificationCenter.fire("SimpleObject", "Update", simple, { "Int64": -1});
+    };
+    
+    function interopUnloaded() {
+        // Release our notification center instance observer
+        if (!isNull(observer)) {
+            observer.release();
+        }
+        // Release our object
+        if (!isNull(simple)) {
+            simple.release();
+        }
     };
     
     interop.on("libraryLoad", function(info) {
         if (info.name.toLowerCase() == "simple") {
-            simpleInteropLoaded();
+            interopLoaded();
+        }
+    });
+    
+    interop.on("libraryUnload", function(info) {
+        if (info.name.toLowerCase() == "simple") {
+            interopUnloaded();
         }
     });
 }());

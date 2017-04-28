@@ -9,33 +9,28 @@ extern "C" {
 
 /*********************************************************************/
 
-int32 SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString);
+int32 SimpleObject_SetInt64Property(void *SimpleObjectContext, int64 Property);
+int32 SimpleObject_GetInt64Property(void *SimpleObjectContext, int64 *Property);
 
-// Interop Callbacks
-int32 SimpleObject_ProcessInstance(void *SimpleObjectContext);
-int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char *ResultString, int32 ResultStringLength);
-int32 SimpleObject_ReleaseInstance(void **SimpleObjectContext);
+int32 SimpleObject_SetFloat64Property(void *SimpleObjectContext, float64 Property);
+int32 SimpleObject_GetFloat64Property(void *SimpleObjectContext, float64 *Property);
 
-/*********************************************************************/
-
-int32 SimpleObject_SetIntProperty(void *SimpleObjectContext, int64 Property);
-int32 SimpleObject_GetIntProperty(void *SimpleObjectContext, int64 *Property);
-
-int32 SimpleObject_SetDblProperty(void *SimpleObjectContext, float64 Property);
-int32 SimpleObject_GetDblProperty(void *SimpleObjectContext, float64 *Property);
-
-int32 SimpleObject_SetBoolProperty(void *SimpleObjectContext, int32 Property);
-int32 SimpleObject_GetBoolProperty(void *SimpleObjectContext, int32 *Property);
+int32 SimpleObject_SetBooleanProperty(void *SimpleObjectContext, int32 Property);
+int32 SimpleObject_GetBooleanProperty(void *SimpleObjectContext, int32 *Property);
 
 int32 SimpleObject_SetStringProperty(void *SimpleObjectContext, char *Property);
 int32 SimpleObject_GetStringProperty(void *SimpleObjectContext, char *Property, int32 MaxPropertyLength);
 
-int32 SimpleObject_RaiseTrigger(void *SimpleObjectContext, int64 Value, char *ResultString, int32 MaxResultStringLength);
+// Interop Callbacks
+int32 SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString);
+int32 SimpleObject_Process(void *SimpleObjectContext);
+int32 SimpleObject_Invoke(void *SimpleObjectContext, char *String, char *ResultString, int32 ResultStringLength);
 
 /*********************************************************************/
 
 int32 SimpleObject_Create(void **SimpleObjectContext);
-int32 SimpleObject_Delete(void **SimpleObjectContext);
+void* SimpleObject_AddRef(void *SimpleObjectContext);
+int32 SimpleObject_Release(void **SimpleObjectContext);
 
 /*********************************************************************/
 
