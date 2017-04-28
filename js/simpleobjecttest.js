@@ -1,6 +1,6 @@
 // Remember to add simpleobject.js to your HTML scripts
 (function () {
-    function workflowLoadComplete() {
+    function simpleInteropLoaded() {
         var testSimple = createSimpleObject();
         console.log("SimpleObject instanceId: " + testSimple.instanceId);
 
@@ -16,8 +16,8 @@
         testSimple.setStringProperty("String Test");
         console.log("SimpleObject getStringProperty: " + testSimple.getStringProperty());
 
-        var obs = notificationCenter.addInstanceObserver("SimpleObject", "Trigger", testSimple, function (sender, info) {
-            obs.release();
+        var observer = notificationCenter.addInstanceObserver("SimpleObject", "Trigger", testSimple, function (sender, info) {
+            observer.release();
 
             console.log("SimpleObject Trigger: " + info.value);
             console.log("SimpleObject Trigger getStringProperty: " + sender.getStringProperty());
@@ -27,11 +27,11 @@
         });
 
         testSimple.raiseTrigger(42);
-    }
-
-    notificationCenter.addObserver("Task", "Complete", function (sender, info) {
-        if (sender.getName() === "load") {
-            workflowLoadComplete();
+    };
+    
+    interop.on("libraryLoad", function(info) {
+        if (info.name.toLowerCase() == "simple") {
+            simpleInteropLoaded();
         }
     });
 }());

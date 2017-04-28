@@ -1,3 +1,7 @@
+/** @file simpleobject.js
+ *  @class SimpleObject
+ *  @brief 
+ */
 function SimpleObject(instanceId) {
     this.instanceId = instanceId;
 }
@@ -12,12 +16,17 @@ SimpleObject.prototype.releaseInstance = function() {
     interop.releaseInstance(this.instanceId);
 };
 
+/**
+ * Gets an integer value
+ */
 SimpleObject.prototype.getIntProperty = function() {
     return this.invoke({
         "method": "getIntProperty"
     });
 };
-
+/**
+ * Sets an integer value
+ */
 SimpleObject.prototype.setIntProperty = function(value) {
     return this.invoke({
         "method": "setIntProperty",
@@ -25,12 +34,18 @@ SimpleObject.prototype.setIntProperty = function(value) {
     });
 };
 
+/**
+ * Gets a double value
+ */
 SimpleObject.prototype.getDblProperty = function() {
     return this.invoke({
         "method": "getDblProperty"
     });
 };
 
+/**
+ * Sets a double value
+ */
 SimpleObject.prototype.setDblProperty = function(value) {
     return this.invoke({
         "method": "setDblProperty",
@@ -38,12 +53,18 @@ SimpleObject.prototype.setDblProperty = function(value) {
     });
 };
 
+/**
+ * Gets a boolean value
+ */
 SimpleObject.prototype.getBoolProperty = function() {
     return this.invoke({
         "method": "getBoolProperty"
     });
 };
 
+/**
+ * Sets a boolean value
+ */
 SimpleObject.prototype.setBoolProperty = function(value) {
     return this.invoke({
         "method": "setBoolProperty",
@@ -51,12 +72,18 @@ SimpleObject.prototype.setBoolProperty = function(value) {
     });
 };
 
+/**
+ * Gets a string value
+ */
 SimpleObject.prototype.getStringProperty = function() {
     return this.invoke({
         "method": "getStringProperty"
     });
 };
 
+/**
+ * Sets a integer value
+ */
 SimpleObject.prototype.setStringProperty = function(value) {
     return this.invoke({
         "method": "setStringProperty",
@@ -64,6 +91,9 @@ SimpleObject.prototype.setStringProperty = function(value) {
     });
 };
 
+/**
+ * Raises a notification
+ */
 SimpleObject.prototype.raiseTrigger = function(value) {
     return this.invoke({
         "method": "raiseTrigger",
