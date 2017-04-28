@@ -25,7 +25,7 @@ int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdL
         *ProcessInstance = NULL;
 
         // Comment this line in if you want the process call
-        // *ProcessInstance = SimpleObject_ProcessInstance;
+        // *ProcessInstance = SimpleObject_Process;
 
         *UserPtr = Context;
         return TRUE;
