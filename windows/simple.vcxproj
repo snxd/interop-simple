@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\interop\interoplib.c" />
     <ClCompile Include="..\jansson\dump.c" />
     <ClCompile Include="..\jansson\error.c" />
     <ClCompile Include="..\jansson\hashtable.c" />
@@ -103,6 +104,8 @@
   <ItemGroup>
     <ClInclude Include="..\interop\interoplib.h" />
     <ClInclude Include="..\interop\interopstub.h" />
+    <ClInclude Include="..\interop\taski.h" />
+    <ClInclude Include="..\interop\workflowi.h" />
     <ClInclude Include="..\jansson\hashtable.h" />
     <ClInclude Include="..\jansson\jansson.h" />
     <ClInclude Include="..\jansson\jansson_private.h" />

@@ -6,12 +6,6 @@
 
 /*********************************************************************/
 
-NotificationCenter_FireWithJSONCallback NotificationCenter_FireWithJSON = NULL;
-NotificationCenter_FireAfterDelayWithJSONCallback NotificationCenter_FireAfterDelayWithJSON = NULL;
-Interop_GenerateInstanceIdCallback Interop_GenerateInstanceId = NULL;
-
-/*********************************************************************/
-
 int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdLength,
                              void *ExecuteUserPtr, Interop_ExecuteCallback Execute,
                              Interop_InvokeInstanceCallback *InvokeInstance,
@@ -41,13 +35,7 @@ int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdL
 
 int32 Interop_SetOverride(char *Key, void *Value)
 {
-    if (strcmp(Key, "NotificationCenter_FireWithJSON") == 0)
-        NotificationCenter_FireWithJSON = Value;
-    else if (strcmp(Key, "NotificationCenter_FireAfterDelayWithJSON") == 0)
-        NotificationCenter_FireAfterDelayWithJSON = Value;
-    else if (strcmp(Key, "Interop_GenerateInstanceId") == 0)
-        Interop_GenerateInstanceId = Value;
-
+    InteropLib_SetOverride(Key, Value);
     return TRUE;
 }
 

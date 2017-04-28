@@ -7,9 +7,9 @@
 * QtCreator 5.8
 * DIRECT 5
 
-### Build Instructions
+### Setup Instructions
 
-1. Compile the dynamic library
+1. Compile the solution
 2. Copy the dynamic library from the target directory to the host.exe directory
 3. Edit workflow.json and add the following task to be run in the load entry point: ```
     "loadSimple": {

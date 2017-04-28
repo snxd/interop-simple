@@ -25,13 +25,6 @@ typedef struct SimpleObjectStruct
 
 /********************************************************************/
 
-extern NotificationCenter_FireWithJSONCallback NotificationCenter_FireWithJSON;
-extern NotificationCenter_FireAfterDelayWithJSONCallback NotificationCenter_FireAfterDelayWithJSON;
-extern Interop_GenerateInstanceIdCallback Interop_GenerateInstanceId;
-
-/********************************************************************/
-// Interop Functions
-
 int32 SimpleObject_GetInstanceId(void *SimpleObjectContext, char *String, int32 MaxString)
 {
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
@@ -83,7 +76,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
         RetVal = MethodName != NULL;
     }
 
-    if (RetVal == TRUE && strcmp(MethodName, "setIntProperty") == 0)
+    if (RetVal == TRUE && String_Compare(MethodName, "setIntProperty") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -95,7 +88,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "getIntProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getIntProperty") == TRUE)
     {
         if (RetVal == TRUE)
         {
@@ -103,7 +96,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_integer(MethodResultInt)) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "setDblProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "setDblProperty") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -115,7 +108,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "getDblProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getDblProperty") == TRUE)
     {
         if (RetVal == TRUE)
         {
@@ -123,7 +116,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_real(MethodResultDbl)) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "setBoolProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "setBoolProperty") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -135,15 +128,15 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "getBoolProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getBoolProperty") == TRUE)
     {
         if (RetVal == TRUE)
         {
             SimpleObject_GetBoolProperty(SimpleObject, &MethodResultBool);
-            RetVal = (JSONReturn = (MethodResultBool == TRUE) ? json_true() : json_false()) != NULL;
+            RetVal = (JSONReturn = json_boolean(MethodResultBool)) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "setStringProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "setStringProperty") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -155,7 +148,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_null()) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "getStringProperty") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "getStringProperty") == TRUE)
     {
         if (RetVal == TRUE)
         {
@@ -163,7 +156,7 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
             RetVal = (JSONReturn = json_string(MethodResultString)) != NULL;
         }
     }
-    else if (RetVal == TRUE && strcmp(MethodName, "raiseTrigger") == 0)
+    else if (RetVal == TRUE && String_Compare(MethodName, "raiseTrigger") == TRUE)
     {
         if (RetVal == TRUE)
             RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
@@ -186,9 +179,9 @@ int32 SimpleObject_InvokeInstance(void *SimpleObjectContext, char *String, char 
         RetVal = (JSONDumpString = json_dumps(JSONReturnRoot, 0)) != NULL;
 
     if (RetVal == TRUE)
-        RetVal = ((signed)strlen(JSONDumpString) < ResultStringLength);
+        RetVal = ((signed)String_Length(JSONDumpString) < ResultStringLength);
     if (RetVal == TRUE)
-        strncpy(ResultString, JSONDumpString, ResultStringLength);
+        String_CopyLength(ResultString, JSONDumpString, ResultStringLength);
 
     if (JSONDumpString != NULL)
         jsonp_free(JSONDumpString);

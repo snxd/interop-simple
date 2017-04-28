@@ -14,6 +14,9 @@
     <Filter Include="Jansson">
       <UniqueIdentifier>{85f94474-8605-40b9-a43c-0bfafc30059b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interop">
+      <UniqueIdentifier>{ae8b23ba-0a8a-46ce-a1b3-8ca0edb1636f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\simpleinterop.c">
@@ -55,14 +58,11 @@
     <ClCompile Include="..\jansson\hashtable_seed.c">
       <Filter>Jansson</Filter>
     </ClCompile>
+    <ClCompile Include="..\interop\interoplib.c">
+      <Filter>Interop</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\interop\interoplib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\interop\interopstub.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\simpleobject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -83,6 +83,18 @@
     </ClInclude>
     <ClInclude Include="..\jansson\utf.h">
       <Filter>Jansson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\interoplib.h">
+      <Filter>Interop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\interopstub.h">
+      <Filter>Interop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\taski.h">
+      <Filter>Interop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\interop\workflowi.h">
+      <Filter>Interop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
