@@ -33,6 +33,7 @@
 		D867CE3A1EB2BE1000F7CEF7 /* interoplib.c in Sources */ = {isa = PBXBuildFile; fileRef = D867CE371EB2BE1000F7CEF7 /* interoplib.c */; };
 		D867CE3B1EB2BE1000F7CEF7 /* taski.h in Headers */ = {isa = PBXBuildFile; fileRef = D867CE381EB2BE1000F7CEF7 /* taski.h */; };
 		D867CE3C1EB2BE1000F7CEF7 /* workflowi.h in Headers */ = {isa = PBXBuildFile; fileRef = D867CE391EB2BE1000F7CEF7 /* workflowi.h */; };
+		D867CE3E1EB3B5A800F7CEF7 /* dictionaryi.h in Headers */ = {isa = PBXBuildFile; fileRef = D867CE3D1EB3B5A800F7CEF7 /* dictionaryi.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		D867CE371EB2BE1000F7CEF7 /* interoplib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = interoplib.c; path = ../interop/interoplib.c; sourceTree = "<group>"; };
 		D867CE381EB2BE1000F7CEF7 /* taski.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = taski.h; path = ../interop/taski.h; sourceTree = "<group>"; };
 		D867CE391EB2BE1000F7CEF7 /* workflowi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = workflowi.h; path = ../interop/workflowi.h; sourceTree = "<group>"; };
+		D867CE3D1EB3B5A800F7CEF7 /* dictionaryi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = dictionaryi.h; path = ../interop/dictionaryi.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,11 +109,12 @@
 		D82D5F971EB278BF00EA3BF5 /* Interop */ = {
 			isa = PBXGroup;
 			children = (
+				D867CE3D1EB3B5A800F7CEF7 /* dictionaryi.h */,
 				D867CE371EB2BE1000F7CEF7 /* interoplib.c */,
-				D867CE381EB2BE1000F7CEF7 /* taski.h */,
-				D867CE391EB2BE1000F7CEF7 /* workflowi.h */,
 				D82D5F981EB278CC00EA3BF5 /* interoplib.h */,
 				D82D5F991EB278CC00EA3BF5 /* interopstub.h */,
+				D867CE381EB2BE1000F7CEF7 /* taski.h */,
+				D867CE391EB2BE1000F7CEF7 /* workflowi.h */,
 			);
 			name = Interop;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 				D867CDC81EB2961400F7CEF7 /* lookup3.h in Headers */,
 				D82D5F9A1EB278CC00EA3BF5 /* interoplib.h in Headers */,
 				D867CDCC1EB2961400F7CEF7 /* strbuffer.h in Headers */,
+				D867CE3E1EB3B5A800F7CEF7 /* dictionaryi.h in Headers */,
 				D867CE3B1EB2BE1000F7CEF7 /* taski.h in Headers */,
 				D867CE3C1EB2BE1000F7CEF7 /* workflowi.h in Headers */,
 				D82D5F961EB278BB00EA3BF5 /* simpleobject.h in Headers */,
