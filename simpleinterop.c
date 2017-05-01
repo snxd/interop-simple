@@ -1,6 +1,7 @@
 #include <string.h>
 
 #include "interoplib.h"
+#include "interopstub.h"
 
 #include "simpleobject.h"
 
