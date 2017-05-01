@@ -12,6 +12,10 @@
 
 /*********************************************************************/
 
+#define SIMPLEOBJECT_MAXPARAMETERS                      (10)
+
+/*********************************************************************/
+
 typedef struct SimpleObjectStruct
 {
     // Interop Storage Data
@@ -159,7 +163,7 @@ int32 SimpleObject_Invoke(void *SimpleObjectContext, char *String, char *ResultS
 
     SimpleObjectStruct *SimpleObject = (SimpleObjectStruct *)SimpleObjectContext;
     char *MethodName = NULL;
-    char MethodResultString[MAX_JSON_STRINGLENGTH];
+    char MethodResultString[INTEROP_MAXSTRING];
     int64 MethodResultInt = 0;
     float64 MethodResultDbl = 0;
     int32 MethodResultBool = 0;
@@ -168,11 +172,11 @@ int32 SimpleObject_Invoke(void *SimpleObjectContext, char *String, char *ResultS
     json_t *JSONReturnRoot = NULL;
     json_t *JSONReturn = NULL;
     json_t *JSONMethod = NULL;
-    json_t *Parameter[MAX_JSON_PARAMETERS];
+    json_t *Parameter[SIMPLEOBJECT_MAXPARAMETERS];
     json_error_t JSONError;
     int32 RetVal = FALSE;
 
-    memset(MethodResultString, 0, MAX_JSON_STRINGLENGTH);
+    memset(MethodResultString, 0, INTEROP_MAXSTRING);
     JSON = json_loads(String, 0, &JSONError);
     if (JSON == FALSE)
         return FALSE;
@@ -264,7 +268,7 @@ int32 SimpleObject_Invoke(void *SimpleObjectContext, char *String, char *ResultS
     {
         if (RetVal == TRUE)
         {
-            SimpleObject_GetStringProperty(SimpleObject, MethodResultString, MAX_JSON_STRINGLENGTH);
+            SimpleObject_GetStringProperty(SimpleObject, MethodResultString, INTEROP_MAXSTRING);
             RetVal = (JSONReturn = json_string(MethodResultString)) != NULL;
         }
     }
