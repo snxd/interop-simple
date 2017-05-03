@@ -4,8 +4,8 @@ This is an example interop that shows how to create a simple javascript object.
 
 ### Contents 
 
-* js/simpleobject.js - Javascript class
-* js/simpleobjecttest.js - Javascript example
+* js/simple.js - Javascript class
+* js/simpletest.js - Javascript example
 * interop - DIRECT interop headers
 * jansson - Jansson javascript parser
 * mac - Xcode project files
@@ -37,7 +37,7 @@ This is an example interop that shows how to create a simple javascript object.
     },```
 5. Copy simpleobject.js and simpleobjecttest.js from the js directory to the skin directory
 6. Open main.html and insert the following scripts after main.js: ```
-    <script src="simpleobject.js" type="text/javascript"></script>
-    <script src="simpleobjecttest.js" type="text/javascript"></script>```
+    <script src="simple.js" type="text/javascript"></script>
+    <script src="simpletest.js" type="text/javascript"></script>```
 7. Run host.exe with --disablesecurity as the first argument (during production if you sign the dll you won't need this).
 

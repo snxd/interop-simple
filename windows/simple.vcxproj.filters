@@ -101,10 +101,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\js\simpleobject.js">
+    <None Include="..\js\simple.js">
       <Filter>Javascript</Filter>
     </None>
-    <None Include="..\js\simpleobjecttest.js">
+    <None Include="..\js\simpletest.js">
       <Filter>Javascript</Filter>
     </None>
     <None Include="simple.def">

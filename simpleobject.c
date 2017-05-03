@@ -314,7 +314,7 @@ int32 SimpleObject_Create(void **SimpleObjectContext)
 
     NotificationCenter_AddInstanceObserver("SimpleObject", "Update", SimpleObject, SimpleObject, SimpleObject_Notification_OnUpdate);
 
-    memset(SimpleObject->StringProperty, 0, 320);
+    memset(SimpleObject->StringProperty, 0, Element_Count(SimpleObject->StringProperty));
 
     *SimpleObjectContext = SimpleObject;
     return TRUE;

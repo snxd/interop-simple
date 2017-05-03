@@ -1,4 +1,4 @@
-// Remember to add simpleobject.js to your HTML scripts
+// Remember to add simple.js to your HTML scripts
 (function () {
     var simple = null;
     var observer = null;

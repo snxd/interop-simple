@@ -116,8 +116,8 @@
     <ClInclude Include="..\simpleobject.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\js\simpleobject.js" />
-    <None Include="..\js\simpleobjecttest.js" />
+    <None Include="..\js\simple.js" />
+    <None Include="..\js\simpletest.js" />
     <None Include="simple.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,5 @@
-/** @file simpleobject.js
- *  @class SimpleObject
+/** @file simple.js
+ *  @class Simple Object
  *  @brief 
  */
 function SimpleObject(instanceId) {
