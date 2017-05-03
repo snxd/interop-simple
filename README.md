@@ -2,7 +2,6 @@
 
 ### Contents 
 
-* bin - Priority interop dlls
 * js/simpleobject.js - Javascript class
 * js/simpleobjecttest.js - Javascript example
 * interop - DIRECT interop headers
