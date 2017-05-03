@@ -8,7 +8,7 @@
         //notificationCenter.verbose = true;
         //interop.verbose = true;
         
-        var simple = createSimpleObject();
+        simple = createSimpleObject();
 
         // Watch for changes in object
         observer = notificationCenter.addInstanceObserver("SimpleObject", "Changed", simple, function (sender, info) {
