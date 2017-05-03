@@ -101,7 +101,7 @@ static int dump_indent(size_t flags, int depth, int space, json_dump_callback_t 
 static int dump_string(const char *str, size_t len, json_dump_callback_t dump, void *data, size_t flags)
 {
     const char *pos, *end, *lim;
-    int32_t codepoint = 0;
+    int32_t codepoint;
 
     if(dump("\"", 1, data))
         return -1;
@@ -336,7 +336,7 @@ static int do_dump(const json_t *json, size_t flags, int depth,
                 size_t size, i;
 
                 size = json_object_size(json);
-                keys = jsonp_malloc(size * sizeof(const char *));
+                keys = (char **)jsonp_malloc(size * sizeof(const char *));
                 if(!keys)
                     goto object_error;
 
