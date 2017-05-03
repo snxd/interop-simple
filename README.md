@@ -3,8 +3,8 @@
 ### Contents 
 
 * bin - Priority interop dlls
-* js/simpleojbect.js - Javascript class
-* js/simpleojbecttest.js - Javascript example
+* js/simpleobject.js - Javascript class
+* js/simpleobjecttest.js - Javascript example
 * interop - DIRECT interop headers
 * jansson - Jansson javascript parser
 * mac - Xcode project files
