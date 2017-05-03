@@ -1,5 +1,7 @@
 ## Simple Interop Example
 
+This is an example interop that shows how to create a simple javascript object.
+
 ### Contents 
 
 * js/simpleobject.js - Javascript class
