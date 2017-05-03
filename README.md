@@ -15,13 +15,13 @@
     "loadSimple": {
         "type": "interopLoad",
         "name": "simple",
-        "path": "{ModulePath}{LibraryPrefix}simple.{LibraryExtension}"
+        "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
     },```
 4. Edit workflow.json and add the following task to be run in the unload entry point: ```
     "unloadSimple": {
         "type": "interopUnload",
         "name": "simple",
-        "path": "{ModulePath}{LibraryPrefix}simple.{LibraryExtension}"
+        "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
     },```
 5. Copy simpleobject.js and simpleobjecttest.js from the js directory to the skin directory
 6. Open main.html and insert the following scripts after main.js: ```
