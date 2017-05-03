@@ -1,5 +1,16 @@
 ## Simple Interop Example
 
+### Contents 
+
+* bin - Priority interop dlls
+* js/simpleojbect.js - Javascript class
+* js/simpleojbecttest.js - Javascript example
+* interop - DIRECT interop headers
+* jansson - Jansson javascript parser
+* mac - Xcode project files
+* linux - QtCreator project files
+* windows - Windows project files
+
 ### Requirements
 
 * Visual Studio 2013
