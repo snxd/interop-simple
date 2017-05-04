@@ -63,9 +63,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\simple.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\jansson\hashtable.h">
       <Filter>Jansson</Filter>
     </ClInclude>
@@ -98,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="..\interop\dictionaryi.h">
       <Filter>Interop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\simple.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
