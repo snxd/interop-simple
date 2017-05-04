@@ -22,7 +22,7 @@
     <ClCompile Include="..\simpleinterop.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\simpleobject.c">
+    <ClCompile Include="..\simple.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\jansson\dump.c">
@@ -63,7 +63,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\simpleobject.h">
+    <ClInclude Include="..\simple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\jansson\hashtable.h">

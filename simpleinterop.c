@@ -3,7 +3,7 @@
 #include "interoplib.h"
 #include "interopstub.h"
 
-#include "simpleobject.h"
+#include "simple.h"
 
 /*********************************************************************/
 
@@ -16,17 +16,17 @@ int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdL
 {
     void *Context;
 
-    if (String_Compare(TypeName, "Simple.SimpleObject") == TRUE)
+    if (String_Compare(TypeName, "SSN.Simple") == TRUE)
     {
-        SimpleObject_Create(&Context);
-        SimpleObject_GetInstanceId(Context, InstanceId, InstanceIdLength);
+        Simple_Create(&Context);
+        Simple_GetInstanceId(Context, InstanceId, InstanceIdLength);
 
-        *InvokeInstance = SimpleObject_Invoke;
-        *ReleaseInstance = SimpleObject_Release;
+        *InvokeInstance = Simple_Invoke;
+        *ReleaseInstance = Simple_Release;
         *ProcessInstance = NULL;
 
         // Comment this line in if you want the process call
-        // *ProcessInstance = SimpleObject_Process;
+        // *ProcessInstance = Simple_Process;
 
         *UserPtr = Context;
         return TRUE;

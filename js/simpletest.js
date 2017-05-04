@@ -8,25 +8,25 @@
         //notificationCenter.verbose = true;
         //interop.verbose = true;
         
-        simple = createSimpleObject();
+        simple = createSimple();
 
         // Watch for changes in object
-        observer = notificationCenter.addInstanceObserver("SimpleObject", "Changed", simple, function (sender, info) {
-            console.log("SimpleObject Changed - {0} -> {1}".format(info.oldValue, info.newValue));
+        observer = notificationCenter.addInstanceObserver("Simple", "Changed", simple, function (sender, info) {
+            console.log("Simple Changed - {0} -> {1}".format(info.oldValue, info.newValue));
         });
         
-        console.log("SimpleObject InstanceId - " + simple.instanceId);
+        console.log("Simple InstanceId - " + simple.instanceId);
         simple.setInt64Property(406);
-        console.log("SimpleObject Int64 - " + simple.getInt64Property());
+        console.log("Simple Int64 - " + simple.getInt64Property());
         simple.setFloat64Property(40.1);
-        console.log("SimpleObject Float64 - " + simple.getFloat64Property());
+        console.log("Simple Float64 - " + simple.getFloat64Property());
         simple.setBooleanProperty(true);
-        console.log("SimpleObject Boolean - " + simple.getBooleanProperty());
+        console.log("Simple Boolean - " + simple.getBooleanProperty());
         simple.setStringProperty("String Test");
-        console.log("SimpleObject String - " + simple.getStringProperty());
+        console.log("Simple String - " + simple.getStringProperty());
         
         // Send changes to object through notification center
-        notificationCenter.fire("SimpleObject", "Update", simple, { "Int64": -1});
+        notificationCenter.fire("Simple", "Update", simple, { "Int64": -1});
     };
     
     function interopUnloaded() {

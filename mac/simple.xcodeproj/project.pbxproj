@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D82D5F941EB278BB00EA3BF5 /* simpleinterop.c in Sources */ = {isa = PBXBuildFile; fileRef = D82D5F911EB278BB00EA3BF5 /* simpleinterop.c */; };
-		D82D5F951EB278BB00EA3BF5 /* simpleobject.c in Sources */ = {isa = PBXBuildFile; fileRef = D82D5F921EB278BB00EA3BF5 /* simpleobject.c */; };
-		D82D5F961EB278BB00EA3BF5 /* simpleobject.h in Headers */ = {isa = PBXBuildFile; fileRef = D82D5F931EB278BB00EA3BF5 /* simpleobject.h */; };
+		D82D5F951EB278BB00EA3BF5 /* simple.c in Sources */ = {isa = PBXBuildFile; fileRef = D82D5F921EB278BB00EA3BF5 /* simple.c */; };
+		D82D5F961EB278BB00EA3BF5 /* simple.h in Headers */ = {isa = PBXBuildFile; fileRef = D82D5F931EB278BB00EA3BF5 /* simple.h */; };
 		D82D5F9A1EB278CC00EA3BF5 /* interoplib.h in Headers */ = {isa = PBXBuildFile; fileRef = D82D5F981EB278CC00EA3BF5 /* interoplib.h */; };
 		D82D5F9B1EB278CC00EA3BF5 /* interopstub.h in Headers */ = {isa = PBXBuildFile; fileRef = D82D5F991EB278CC00EA3BF5 /* interopstub.h */; };
 		D867CDBF1EB2961400F7CEF7 /* dump.c in Sources */ = {isa = PBXBuildFile; fileRef = D867CDAD1EB2961400F7CEF7 /* dump.c */; };
@@ -39,8 +39,8 @@
 /* Begin PBXFileReference section */
 		D82D5F891EB2786900EA3BF5 /* libsimple.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsimple.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		D82D5F911EB278BB00EA3BF5 /* simpleinterop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simpleinterop.c; path = ../simpleinterop.c; sourceTree = "<group>"; };
-		D82D5F921EB278BB00EA3BF5 /* simpleobject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simpleobject.c; path = ../simpleobject.c; sourceTree = "<group>"; };
-		D82D5F931EB278BB00EA3BF5 /* simpleobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpleobject.h; path = ../simpleobject.h; sourceTree = "<group>"; };
+		D82D5F921EB278BB00EA3BF5 /* simple.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = simple.c; path = ../simple.c; sourceTree = "<group>"; };
+		D82D5F931EB278BB00EA3BF5 /* simple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simple.h; path = ../simple.h; sourceTree = "<group>"; };
 		D82D5F981EB278CC00EA3BF5 /* interoplib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = interoplib.h; path = ../interop/interoplib.h; sourceTree = "<group>"; };
 		D82D5F991EB278CC00EA3BF5 /* interopstub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = interopstub.h; path = ../interop/interopstub.h; sourceTree = "<group>"; };
 		D867CDAD1EB2961400F7CEF7 /* dump.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dump.c; path = ../jansson/dump.c; sourceTree = "<group>"; };
@@ -100,8 +100,8 @@
 			isa = PBXGroup;
 			children = (
 				D82D5F911EB278BB00EA3BF5 /* simpleinterop.c */,
-				D82D5F921EB278BB00EA3BF5 /* simpleobject.c */,
-				D82D5F931EB278BB00EA3BF5 /* simpleobject.h */,
+				D82D5F921EB278BB00EA3BF5 /* simple.c */,
+				D82D5F931EB278BB00EA3BF5 /* simple.h */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -162,7 +162,7 @@
 				D867CE3E1EB3B5A800F7CEF7 /* dictionaryi.h in Headers */,
 				D867CE3B1EB2BE1000F7CEF7 /* taski.h in Headers */,
 				D867CE3C1EB2BE1000F7CEF7 /* workflowi.h in Headers */,
-				D82D5F961EB278BB00EA3BF5 /* simpleobject.h in Headers */,
+				D82D5F961EB278BB00EA3BF5 /* simple.h in Headers */,
 				D867CDC51EB2961400F7CEF7 /* jansson_private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,7 +226,7 @@
 			files = (
 				D867CDD01EB2961400F7CEF7 /* value.c in Sources */,
 				D867CDCD1EB2961400F7CEF7 /* strconv.c in Sources */,
-				D82D5F951EB278BB00EA3BF5 /* simpleobject.c in Sources */,
+				D82D5F951EB278BB00EA3BF5 /* simple.c in Sources */,
 				D82D5F941EB278BB00EA3BF5 /* simpleinterop.c in Sources */,
 				D867CDC91EB2961400F7CEF7 /* memory.c in Sources */,
 				D867CDC21EB2961400F7CEF7 /* hashtable.c in Sources */,

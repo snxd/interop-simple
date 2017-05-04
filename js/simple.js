@@ -2,24 +2,24 @@
  *  @class Simple Object
  *  @brief 
  */
-function SimpleObject(instanceId) {
+function Simple(instanceId) {
     this.instanceId = instanceId;
 }
 
-SimpleObject.prototype.release = function() {
+Simple.prototype.release = function() {
     this.releaseInstance();
 };
-SimpleObject.prototype.invoke = function(methodBinding) {
+Simple.prototype.invoke = function(methodBinding) {
     return interop.invoke(this.instanceId, methodBinding);
 };
-SimpleObject.prototype.releaseInstance = function() {
+Simple.prototype.releaseInstance = function() {
     interop.releaseInstance(this.instanceId);
 };
 
 /**
  * Gets an integer value
  */
-SimpleObject.prototype.getInt64Property = function() {
+Simple.prototype.getInt64Property = function() {
     return this.invoke({
         "method": "getInt64Property"
     });
@@ -27,7 +27,7 @@ SimpleObject.prototype.getInt64Property = function() {
 /**
  * Sets an integer value
  */
-SimpleObject.prototype.setInt64Property = function(value) {
+Simple.prototype.setInt64Property = function(value) {
     return this.invoke({
         "method": "setInt64Property",
         "value": value
@@ -37,7 +37,7 @@ SimpleObject.prototype.setInt64Property = function(value) {
 /**
  * Gets a double value
  */
-SimpleObject.prototype.getFloat64Property = function() {
+Simple.prototype.getFloat64Property = function() {
     return this.invoke({
         "method": "getFloat64Property"
     });
@@ -46,7 +46,7 @@ SimpleObject.prototype.getFloat64Property = function() {
 /**
  * Sets a double value
  */
-SimpleObject.prototype.setFloat64Property = function(value) {
+Simple.prototype.setFloat64Property = function(value) {
     return this.invoke({
         "method": "setFloat64Property",
         "value": value
@@ -56,7 +56,7 @@ SimpleObject.prototype.setFloat64Property = function(value) {
 /**
  * Gets a boolean value
  */
-SimpleObject.prototype.getBooleanProperty = function() {
+Simple.prototype.getBooleanProperty = function() {
     return this.invoke({
         "method": "getBooleanProperty"
     });
@@ -65,7 +65,7 @@ SimpleObject.prototype.getBooleanProperty = function() {
 /**
  * Sets a boolean value
  */
-SimpleObject.prototype.setBooleanProperty = function(value) {
+Simple.prototype.setBooleanProperty = function(value) {
     return this.invoke({
         "method": "setBooleanProperty",
         "value": value
@@ -75,7 +75,7 @@ SimpleObject.prototype.setBooleanProperty = function(value) {
 /**
  * Gets a string value
  */
-SimpleObject.prototype.getStringProperty = function() {
+Simple.prototype.getStringProperty = function() {
     return this.invoke({
         "method": "getStringProperty"
     });
@@ -84,14 +84,14 @@ SimpleObject.prototype.getStringProperty = function() {
 /**
  * Sets a integer value
  */
-SimpleObject.prototype.setStringProperty = function(value) {
+Simple.prototype.setStringProperty = function(value) {
     return this.invoke({
         "method": "setStringProperty",
         "value": value
     });
 };
 
-function createSimpleObject(instanceId) {
-    return interop.createInstance("Simple.SimpleObject", SimpleObject, instanceId);
+function createSimple(instanceId) {
+    return interop.createInstance("SSN.Simple", Simple, instanceId);
 }
 

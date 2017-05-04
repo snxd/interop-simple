@@ -99,7 +99,7 @@
     <ClCompile Include="..\jansson\utf.c" />
     <ClCompile Include="..\jansson\value.c" />
     <ClCompile Include="..\simpleinterop.c" />
-    <ClCompile Include="..\simpleobject.c" />
+    <ClCompile Include="..\simple.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\interop\dictionaryi.h" />
@@ -113,7 +113,7 @@
     <ClInclude Include="..\jansson\lookup3.h" />
     <ClInclude Include="..\jansson\strbuffer.h" />
     <ClInclude Include="..\jansson\utf.h" />
-    <ClInclude Include="..\simpleobject.h" />
+    <ClInclude Include="..\simple.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\js\simple.js" />

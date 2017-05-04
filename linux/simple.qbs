@@ -40,7 +40,7 @@ Product {
         prefix: "../"
         files: [
             "simpleinterop.c",
-            "simpleobject.c"
+            "simple.c"
         ]
     }
 
@@ -48,7 +48,7 @@ Product {
         name: "headers"
         prefix: "../"
         files: [
-            "simpleobject.h"
+            "simple.h"
         ]
     }
 
