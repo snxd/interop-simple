@@ -1,4 +1,4 @@
-## Simple Interop Example
+## Simple Interop Example for DIRECT 5
 
 This is an example interop that shows how to create a simple javascript object.
 
