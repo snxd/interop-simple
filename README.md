@@ -1,4 +1,4 @@
-## Simple Interop Example
+## Simple Interop Example for DIRECT 5.1.9+
 
 This is an example interop that shows how to create a simple javascript object.
 
@@ -17,7 +17,7 @@ This is an example interop that shows how to create a simple javascript object.
 * Visual Studio 2013
 * Xcode 8
 * QtCreator 5.8
-* DIRECT 5
+* DIRECT 5.1.9+
 
 ### Setup Instructions
 
