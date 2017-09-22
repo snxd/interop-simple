@@ -41,7 +41,7 @@ int32 Interop_SetOverride(char *Key, void *Value)
     return TRUE;
 }
 
-int32 Interop_SetOption(char *Key, char *Value)
+int32 Interop_SetOption(char *Key, void *Value)
 {
     return TRUE;
 }
