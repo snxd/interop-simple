@@ -5,9 +5,6 @@
 #include "interoplib.h"
 #include "dictionaryi.h"
 
-#include "jansson.h"
-#include "jansson_private.h"
-
 #include "simple.h"
 
 /*********************************************************************/
@@ -138,6 +135,13 @@ int32 Simple_GetStringProperty(void *SimpleContext, char *Property, int32 MaxPro
     return TRUE;
 }
 
+int32 Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr)
+{
+    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
+    *PropertyPtr = Simple->StringProperty;
+    return TRUE;
+}
+
 /*********************************************************************/
 // Interop Functions
 
@@ -156,143 +160,72 @@ int32 Simple_Process(void *SimpleContext)
     return TRUE;
 }
 
-int32 Simple_Invoke(void *SimpleContext, char *String, char *ResultString, int32 ResultStringLength)
+int32 Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandle ReturnDictionaryHandle)
 {
     // EVERYTHING is marshaled in AND out as a JSON string, use any type supported by JSON and
     // it should marshal ok.
 
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    char *MethodName = NULL;
-    char MethodResultString[INTEROP_MAXSTRING];
-    int64 MethodResultInt = 0;
-    float64 MethodResultDbl = 0;
-    int32 MethodResultBool = 0;
-    char *JSONDumpString = NULL;
-    json_t *JSON = NULL;
-    json_t *JSONReturnRoot = NULL;
-    json_t *JSONReturn = NULL;
-    json_t *JSONMethod = NULL;
-    json_t *Parameter[SIMPLE_MAXPARAMETERS];
-    json_error_t JSONError;
+    echandle ItemHandle = NULL;
+    float64 ValueFloat64 = 0;
+    int64 Value64 = 0;
+    int32 ValueBool = 0;
     int32 RetVal = FALSE;
+    int32 ReturnValue = FALSE;
+    char *Method = NULL;
+    char *ValueString = NULL;
 
-    memset(MethodResultString, 0, INTEROP_MAXSTRING);
-    JSON = json_loads(String, 0, &JSONError);
-    if (JSON == FALSE)
+    if (IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "method", &Method) == FALSE)
         return FALSE;
 
-    RetVal = (JSONMethod = json_object_get(JSON, "method")) != NULL;
-
-    if (RetVal == TRUE)
-        RetVal = json_is_string(JSONMethod);
-
-    if (RetVal == TRUE)
+    if (String_Compare(Method, "setInt64Property") == TRUE)
     {
-        MethodName = (char *)json_string_value(JSONMethod);
-        RetVal = MethodName != NULL;
+        RetVal = IDictionary_GetInt64ByKey(MethodDictionaryHandle, "value", &Value64);
+        if (RetVal == TRUE)
+            ReturnValue = Simple_SetInt64Property(SimpleContext, Value64);
+        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
     }
-
-    if (RetVal == TRUE && String_Compare(MethodName, "setInt64Property") == TRUE)
+    else if (String_Compare(Method, "getInt64Property") == TRUE)
     {
-        if (RetVal == TRUE)
-            RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        if (RetVal == TRUE)
-            RetVal = json_is_integer(Parameter[0]);
-        if (RetVal == TRUE)
-        {
-            Simple_SetInt64Property(SimpleContext, json_integer_value(Parameter[0]));
-            RetVal = (JSONReturn = json_null()) != NULL;
-        }
+        RetVal = Simple_GetInt64Property(Simple, &Value64);
+        IDictionary_AddInt64(ReturnDictionaryHandle, "returnValue", Value64, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getInt64Property") == TRUE)
+    else if (String_Compare(Method, "setFloat64Property") == TRUE)
     {
+        RetVal = IDictionary_GetFloat64ByKey(MethodDictionaryHandle, "value", &ValueFloat64);
         if (RetVal == TRUE)
-        {
-            Simple_GetInt64Property(Simple, &MethodResultInt);
-            RetVal = (JSONReturn = json_integer(MethodResultInt)) != NULL;
-        }
+            ReturnValue = Simple_SetFloat64Property(SimpleContext, ValueFloat64);
+        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "setFloat64Property") == TRUE)
+    else if (String_Compare(Method, "getFloat64Property") == TRUE)
     {
-        if (RetVal == TRUE)
-            RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        if (RetVal == TRUE)
-            RetVal = json_is_real(Parameter[0]);
-        if (RetVal == TRUE)
-        {
-            Simple_SetFloat64Property(SimpleContext, json_real_value(Parameter[0]));
-            RetVal = (JSONReturn = json_null()) != NULL;
-        }
+        RetVal = Simple_GetFloat64Property(Simple, &ValueFloat64);
+        IDictionary_AddFloat64(ReturnDictionaryHandle, "returnValue", ValueFloat64, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getFloat64Property") == TRUE)
+    else if (String_Compare(Method, "setBooleanProperty") == TRUE)
     {
+        RetVal = IDictionary_GetBooleanByKey(MethodDictionaryHandle, "value", &ValueBool);
         if (RetVal == TRUE)
-        {
-            Simple_GetFloat64Property(Simple, &MethodResultDbl);
-            RetVal = (JSONReturn = json_real(MethodResultDbl)) != NULL;
-        }
+            ReturnValue = Simple_SetBooleanProperty(SimpleContext, ValueBool);
+        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "setBooleanProperty") == TRUE)
+    else if (String_Compare(Method, "getBooleanProperty") == TRUE)
     {
-        if (RetVal == TRUE)
-            RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        if (RetVal == TRUE)
-            RetVal = json_is_boolean(Parameter[0]);
-        if (RetVal == TRUE)
-        {
-            Simple_SetBooleanProperty(SimpleContext, json_is_true(Parameter[0]));
-            RetVal = (JSONReturn = json_null()) != NULL;
-        }
+        RetVal = Simple_GetBooleanProperty(Simple, &ValueBool);
+        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ValueBool, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getBooleanProperty") == TRUE)
+    else if (String_Compare(Method, "setStringProperty") == TRUE)
     {
+        RetVal = IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "value", &ValueString);
         if (RetVal == TRUE)
-        {
-            Simple_GetBooleanProperty(Simple, &MethodResultBool);
-            RetVal = (JSONReturn = json_boolean(MethodResultBool)) != NULL;
-        }
+            ReturnValue = Simple_SetStringProperty(SimpleContext, ValueString);
+        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "setStringProperty") == TRUE)
+    else if (String_Compare(Method, "getStringProperty") == TRUE)
     {
-        if (RetVal == TRUE)
-            RetVal = ((Parameter[0] = json_object_get(JSON, "value")) != NULL);
-        if (RetVal == TRUE)
-            RetVal = json_is_string(Parameter[0]);
-        if (RetVal == TRUE)
-        {
-            Simple_SetStringProperty(Simple, (char*)json_string_value(Parameter[0]));
-            RetVal = (JSONReturn = json_null()) != NULL;
-        }
+        RetVal = Simple_GetStringPropertyPtr(Simple, &ValueString);
+        IDictionary_AddString(ReturnDictionaryHandle, "returnValue", ValueString, &ItemHandle);
     }
-    else if (RetVal == TRUE && String_Compare(MethodName, "getStringProperty") == TRUE)
-    {
-        if (RetVal == TRUE)
-        {
-            Simple_GetStringProperty(Simple, MethodResultString, INTEROP_MAXSTRING);
-            RetVal = (JSONReturn = json_string(MethodResultString)) != NULL;
-        }
-    }
-
-    // Set json return value
-    if (RetVal == TRUE)
-        RetVal = (JSONReturnRoot = json_object()) != NULL;
-    if (RetVal == TRUE)
-        RetVal = (json_object_set_new(JSONReturnRoot, "returnValue", JSONReturn) == 0);
-
-    if (RetVal == TRUE)
-        RetVal = (JSONDumpString = json_dumps(JSONReturnRoot, 0)) != NULL;
-
-    if (RetVal == TRUE)
-        RetVal = ((signed)String_Length(JSONDumpString) < ResultStringLength);
-    if (RetVal == TRUE)
-        String_CopyLength(ResultString, JSONDumpString, ResultStringLength);
-
-    if (JSONDumpString != NULL)
-        jsonp_free(JSONDumpString);
-    if (JSONReturnRoot != NULL)
-        json_decref(JSONReturnRoot);
-    if (JSON != NULL)
-        json_decref(JSON);
 
     return RetVal;
 }

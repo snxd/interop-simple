@@ -20,11 +20,12 @@ int32 Simple_GetBooleanProperty(void *SimpleContext, int32 *Property);
 
 int32 Simple_SetStringProperty(void *SimpleContext, char *Property);
 int32 Simple_GetStringProperty(void *SimpleContext, char *Property, int32 MaxPropertyLength);
+int32 Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr);
 
 // Interop Callbacks
 int32 Simple_GetInstanceId(void *SimpleContext, char *String, int32 MaxString);
 int32 Simple_Process(void *SimpleContext);
-int32 Simple_Invoke(void *SimpleContext, char *String, char *ResultString, int32 ResultStringLength);
+int32 Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandle ReturnDictionaryHandle);
 
 /*********************************************************************/
 
