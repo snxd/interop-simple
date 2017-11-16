@@ -7,7 +7,6 @@ This is an example interop that shows how to create a simple javascript object.
 * js/simple.js - Javascript class
 * js/simpletest.js - Javascript example
 * interop - DIRECT interop headers
-* jansson - Jansson javascript parser
 * mac - Xcode project files
 * linux - QtCreator project files
 * windows - Windows project files
