@@ -21,16 +21,17 @@ Product {
             "../interop/",
             "../"
         ])
-        cpp.visibility: "hidden"
         cpp.linkerFlags: base.concat([
-            "-Wl,--retain-symbols-file=" + sourceDirectory + "/simple.def"
+            "--version-script=" + sourceDirectory + "/simple.map",
+            "--gc-sections"
         ])
+        cpp.separateDebugInformation: true
     }
 
     Group {
         name: "exports"
         files: [
-            "simple.def"
+            "simple.map"
         ]
     }
 
@@ -67,6 +68,11 @@ Product {
     Group {
         // Copy produced library to install root
         fileTagsFilter: "dynamiclibrary"
+        qbs.install: true
+    }
+    Group {
+        // Copy debug symbols to install root
+        fileTagsFilter: "debuginfo_dll"
         qbs.install: true
     }
 }
