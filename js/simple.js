@@ -93,6 +93,14 @@
             "value": value
         });
     };
+    /**
+     * Starts a request for a value
+     */
+    Simple.prototype.startValueRequest = function(value) {
+        return this.invoke({
+            "method": "startValueRequest"
+        });
+    };
 
     root.createSimple = function(instanceId) {
         return interop.createInstance("SSN.Simple", Simple, instanceId);

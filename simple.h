@@ -22,6 +22,8 @@ int32 Simple_SetStringProperty(void *SimpleContext, char *Property);
 int32 Simple_GetStringProperty(void *SimpleContext, char *Property, int32 MaxPropertyLength);
 int32 Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr);
 
+int32 Simple_StartValueRequest(void *SimpleContext);
+
 // Interop Callbacks
 int32 Simple_GetInstanceId(void *SimpleContext, char *String, int32 MaxString);
 int32 Simple_Process(void *SimpleContext);

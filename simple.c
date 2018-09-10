@@ -47,6 +47,20 @@ int32 Simple_Notification_OnUpdate(void *UserPtr, char *Type, char *Notification
     return TRUE;
 }
 
+int32 Simple_Notification_OnValueResponse(void *UserPtr, char *Type, char *Notification, void *Sender, echandle DictionaryHandle)
+{
+    SimpleStruct *Simple = (SimpleStruct *)UserPtr;
+    char *ValuePtr = NULL;
+
+    if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == TRUE)
+    {
+        // Do something with value
+        printf(ValuePtr);
+    }
+
+    return TRUE;
+}
+
 /********************************************************************/
 // Concrete Functions
 
@@ -142,6 +156,19 @@ int32 Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr)
     return TRUE;
 }
 
+int32 Simple_StartValueRequest(void *SimpleContext)
+{
+    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
+
+    // Add an observer to wait for a response to our request
+    NotificationCenter_AddInstanceObserver("Simple", "ValueResponse", Simple, Simple, Simple_Notification_OnValueResponse);
+
+    // Send a request for a value
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "ValueRequest", Simple, 0, "{}");
+
+    return TRUE;
+}
+
 /*********************************************************************/
 // Interop Functions
 
@@ -226,6 +253,11 @@ int32 Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echand
         RetVal = Simple_GetStringPropertyPtr(Simple, &ValueString);
         IDictionary_AddString(ReturnDictionaryHandle, "returnValue", ValueString, &ItemHandle);
     }
+    else if (String_Compare(Method, "startValueRequest") == TRUE)
+    {
+        RetVal = Simple_StartValueRequest(Simple);
+        IDictionary_AddInt64(ReturnDictionaryHandle, "returnValue", RetVal, &ItemHandle);
+    }
 
     return RetVal;
 }
@@ -238,6 +270,7 @@ int32 Simple_Create(void **SimpleContext)
     SimpleStruct *Simple = NULL;
 
     Simple = (SimpleStruct *)malloc(sizeof(SimpleStruct));
+    memset(Simple, 0, sizeof(SimpleStruct));
     Interop_GenerateInstanceId(Simple->Class.InstanceId, 40);
 
     Simple->Class.RefCount = 1;
@@ -266,6 +299,7 @@ int32 Simple_Release(void **SimpleContext)
 
     if (--Simple->Class.RefCount == 0)
     {
+        NotificationCenter_RemoveInstanceObserver("Simple", "ValueResponse", Simple, Simple, Simple_Notification_OnValueResponse);
         NotificationCenter_RemoveInstanceObserver("Simple", "Update", Simple, Simple, Simple_Notification_OnUpdate);
         free(Simple);
     }
