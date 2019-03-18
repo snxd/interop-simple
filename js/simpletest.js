@@ -43,6 +43,7 @@
             notificationCenter.fire("Simple", "ValueResponse", simple, response);
             // We are done with the observer
             observer.release();
+            observer = null;
         });
         // Trigger a request for a value, ideally would be called from C
         simple.startValueRequest();
@@ -59,14 +60,14 @@
         }
     };
     
-    interop.on("libraryLoad", function(info) {
-        if (info.name.toLowerCase() == "simple") {
+    interop.on("load", function(info) {
+        if (info.name == "simple") {
             interopLoaded();
         }
     });
     
-    interop.on("libraryUnload", function(info) {
-        if (info.name.toLowerCase() == "simple") {
+    interop.on("unload", function(info) {
+        if (info.name == "simple") {
             interopUnloaded();
         }
     });
