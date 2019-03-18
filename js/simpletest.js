@@ -1,5 +1,5 @@
 // Remember to add simple.js to your HTML scripts
-(function () {
+(function (root) {
     var simple = null;
     var observer = null;
     
@@ -71,4 +71,5 @@
             interopUnloaded();
         }
     });
-}());
+
+}(_global()));
