@@ -37,4 +37,5 @@ endif()
 project(simple C)
 
 add_library(${PROJECT_NAME} SHARED ${SIMPLE_SRC} ${SIMPLE_HEADERS})
+set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(${PROJECT_NAME} interoplib)
