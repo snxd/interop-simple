@@ -55,7 +55,7 @@ int32 Simple_Notification_OnValueResponse(void *UserPtr, char *Type, char *Notif
     if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == TRUE)
     {
         // Do something with value
-        printf(ValuePtr);
+        printf("%s", ValuePtr);
     }
 
     return TRUE;
