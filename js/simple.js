@@ -106,4 +106,4 @@
         return interop.createInstance("SSN.Simple", Simple, instanceId);
     };
     
-}(_global()));
+}(window));
