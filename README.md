@@ -1,4 +1,4 @@
-## Simple Interop Example for DIRECT 6.0
+## Simple Interop Example for DIRECT 6.1
 
 This is an example interop that shows how to create a simple javascript object.
 
@@ -7,7 +7,7 @@ This is an example interop that shows how to create a simple javascript object.
 * js/simple.js - Javascript class
 * js/simpletest.js - Javascript example
 * interop - DIRECT interop headers
-* mac - Macintosh specific files
+* mac - macOS specific files
 * linux - Linux specific files
 * windows - Windows specific files
 
