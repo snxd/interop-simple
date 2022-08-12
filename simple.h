@@ -9,31 +9,31 @@ extern "C" {
 
 /*********************************************************************/
 
-int32 Simple_SetInt64Property(void *SimpleContext, int64 Property);
-int32 Simple_GetInt64Property(void *SimpleContext, int64 *Property);
+bool Simple_SetInt64Property(void *SimpleContext, int64_t Property);
+bool Simple_GetInt64Property(void *SimpleContext, int64_t *Property);
 
-int32 Simple_SetFloat64Property(void *SimpleContext, float64 Property);
-int32 Simple_GetFloat64Property(void *SimpleContext, float64 *Property);
+bool Simple_SetFloat64Property(void *SimpleContext, float64_t Property);
+bool Simple_GetFloat64Property(void *SimpleContext, float64_t *Property);
 
-int32 Simple_SetBooleanProperty(void *SimpleContext, int32 Property);
-int32 Simple_GetBooleanProperty(void *SimpleContext, int32 *Property);
+bool Simple_SetBooleanProperty(void *SimpleContext, bool Property);
+bool Simple_GetBooleanProperty(void *SimpleContext, bool *Property);
 
-int32 Simple_SetStringProperty(void *SimpleContext, char *Property);
-int32 Simple_GetStringProperty(void *SimpleContext, char *Property, int32 MaxPropertyLength);
-int32 Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr);
+bool Simple_SetStringProperty(void *SimpleContext, char *Property);
+bool Simple_GetStringProperty(void *SimpleContext, char *Property, int32_t MaxPropertyLength);
+bool Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr);
 
-int32 Simple_StartValueRequest(void *SimpleContext);
+bool Simple_StartValueRequest(void *SimpleContext);
 
-// Interop Callbacks
-int32 Simple_GetInstanceId(void *SimpleContext, char *String, int32 MaxString);
-int32 Simple_Process(void *SimpleContext);
-int32 Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandle ReturnDictionaryHandle);
+// Interop callbacks
+bool Simple_GetInstanceId(void *SimpleContext, char *String, int32_t MaxString);
+bool Simple_Process(void *SimpleContext);
+bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandle ReturnDictionaryHandle);
 
 /*********************************************************************/
 
-int32 Simple_Create(void **SimpleContext);
-void* Simple_AddRef(void *SimpleContext);
-int32 Simple_Release(void **SimpleContext);
+bool Simple_Create(void **SimpleContext);
+void *Simple_AddRef(void *SimpleContext);
+int32_t Simple_Release(void **SimpleContext);
 
 /*********************************************************************/
 

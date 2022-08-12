@@ -7,17 +7,13 @@
 
 /*********************************************************************/
 
-int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdLength,
-                             void *ExecuteUserPtr, Interop_ExecuteCallback Execute,
-                             Interop_InvokeInstanceCallback *InvokeInstance,
-                             Interop_ReleaseInstanceCallback *ReleaseInstance,
-                             Interop_ProcessInstanceCallback *ProcessInstance,
-                             void **UserPtr)
-{
+bool Interop_CreateInstance(const char *TypeName, char *InstanceId, int32_t InstanceIdLength, void *ExecuteUserPtr,
+                            Interop_ExecuteCallback Execute, Interop_InvokeInstanceCallback *InvokeInstance,
+                            Interop_ReleaseInstanceCallback *ReleaseInstance,
+                            Interop_ProcessInstanceCallback *ProcessInstance, void **UserPtr) {
     void *Context;
 
-    if (String_Compare(TypeName, "SSN.Simple") == TRUE)
-    {
+    if (String_Compare(TypeName, "SSN.Simple") == true) {
         Simple_Create(&Context);
         Simple_GetInstanceId(Context, InstanceId, InstanceIdLength);
 
@@ -25,35 +21,30 @@ int32 Interop_CreateInstance(char *TypeName, char *InstanceId, int32 InstanceIdL
         *ReleaseInstance = Simple_Release;
         *ProcessInstance = NULL;
 
-        // Comment this line in if you want the process call
+        // Uncomment this line in if you want the process call
         // *ProcessInstance = Simple_Process;
 
         *UserPtr = Context;
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
-
-int32 Interop_SetOverride(char *Key, void *Value)
-{
+bool Interop_SetOverride(const char *Key, void *Value) {
     InteropLib_SetOverride(Key, Value);
-    return TRUE;
+    return true;
 }
 
-int32 Interop_SetOption(char *Key, void *Value)
-{
-    return TRUE;
+bool Interop_SetOption(const char *Key, void *Value) {
+    return true;
 }
 
-int32 Interop_Load()
-{
-    return TRUE;
+bool Interop_Load(void) {
+    return true;
 }
 
-int32 Interop_Unload()
-{
-    return TRUE;
+bool Interop_Unload(void) {
+    return true;
 }
 
 /*********************************************************************/
