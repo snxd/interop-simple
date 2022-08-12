@@ -1,9 +1,6 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 
-include_directories(.)
-include_directories(interop)
-
-add_subdirectory(interop)
+add_subdirectory(lib/interop)
 
 set(SIMPLE_SRC
     simple.c
