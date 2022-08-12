@@ -1,63 +1,50 @@
-## Simple Interop Example for DIRECT 6.1
+## Simple Interop Example for DIRECT 7.0
 
-This is an example interop that shows how to create a simple javascript object.
+This is an example interop that shows how to run native code using a simple JavaScript object.
 
 ### Contents
 
-* js/simple.js - Javascript class
-* js/simpletest.js - Javascript example
-* interop - DIRECT interop headers
+* js/Simple.js - JavaScript class
+* js/SimpleExample.js - JavaScript example
+* lib/interop - DIRECT interop interface
 * mac - macOS specific files
 * linux - Linux specific files
 * windows - Windows specific files
 
 ### Requirements
 
-* CMake 2.8
+* CMake 3.0
 
 ### Build Instructions
 
-CMake is a makefile generator that produces solutions and project files for various compiler toolkits.
+Fetch submodules using Git:
 
-#### Visual Studio
-
-```
-cmake .
-cmake --build . --config Debug
+```bash
+git submodule update --init
 ```
 
-#### Xcode
+CMake is a makefile generator that produces solutions and project files for various compiler toolkits. To generate the solution files for your environment and to build the project:
 
-```
-cmake . -G Xcode
-cmake --build . --config Debug
-```
-
-#### Unix Makefiles
-
-```
-cmake . -DCMAKE_BUILD_TYPE=Debug
-cmake --build .
+```bash
+cmake -S . -B build
+cmake --build build --config Debug
 ```
 
 ### Setup Instructions
 
-1. Compile the solution or project for your platform
-2. Copy the dynamic library from the target directory to the host.exe directory
-3. Edit workflow.json and add the following task to be run in the load entry point: ```
-    "loadSimple": {
-        "type": "interopLoad",
-        "name": "simple",
-        "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
-    },```
-4. Edit workflow.json and add the following task to be run in the unload entry point: ```
-    "unloadSimple": {
-        "type": "interopUnload",
-        "name": "simple",
-        "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
-    },```
-5. Copy simple.js and simpletest.js from the js directory to the skin directory
-6. Open main.html and insert the following scripts after main.js: ```
-    <script src="simple.js" type="text/javascript"></script>
-    <script src="simpletest.js" type="text/javascript"></script>```
-7. Run host.exe with --disablesecurity as the first argument (during production if you sign the dll you won't need this).
+First copy the shared library to the directory where you intended to load it from. For our example, we use the same directory as the client's executable: `{moduleAppDirectory}`
+
+### JavaScript Integration
+
+If you intend to use the interop with-in JavaScript use the following steps:
+
+1. Copy `Simple.js` and `SimpleExample.js` from the `js` directory to a directory in your skin called `src/interop`.
+2. Load the example code and interop using `app.loadInterop`:
+    ```js
+    require("./interop/SimpleExample");
+
+    const simplePath = app.expandString("{moduleAppDirectory}{libraryPrefix}simple.{libraryExtension}");
+    app.loadInterop("simple", simplePath);
+    ```
+3. Run `host` application with `--devtools --disablesecurity` (during production if you sign the dll you won't need this).
+4. If it integrated properly, you will see the following lines in console window. <br/><img src="screenshots/console.png">
