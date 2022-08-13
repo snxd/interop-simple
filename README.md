@@ -43,8 +43,8 @@ If you intend to use the interop with-in JavaScript use the following steps:
     ```js
     require("./interop/SimpleExample");
 
-    const simplePath = app.expandString("{moduleAppDirectory}{libraryPrefix}simple.{libraryExtension}");
-    app.loadInterop("simple", simplePath);
+    const simplePath = "{moduleAppDirectory}{libraryPrefix}simple.{libraryExtension}";
+    app.loadInterop("simple", app.expandString(simplePath));
     ```
 3. Run `host` application with `--devtools --disablesecurity` (during production if you sign the dll you won't need this).
 4. If it integrated properly, you will see the following lines in console window. <br/><img src="screenshots/console.png">
