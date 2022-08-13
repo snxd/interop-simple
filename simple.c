@@ -267,14 +267,15 @@ int32_t Simple_Release(void **SimpleContext) {
     Simple = (SimpleStruct *)*SimpleContext;
     if (Simple == NULL)
         return 0;
+
+    *SimpleContext = NULL;
     if (--Simple->Class.RefCount == 0) {
         NotificationCenter_RemoveInstanceObserver("Simple", "ValueResponse", Simple, Simple,
                                                   Simple_Notification_OnValueResponse);
         NotificationCenter_RemoveInstanceObserver("Simple", "Update", Simple, Simple, Simple_Notification_OnUpdate);
         free(Simple);
+        return 0;
     }
-
-    *SimpleContext = NULL;
     return Simple->Class.RefCount;
 }
 
