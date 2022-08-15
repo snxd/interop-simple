@@ -17,10 +17,10 @@ function Simple(instanceId) {
   this.instanceId = instanceId;
 }
 
-
 Simple.prototype = Object.create(EventEmitter.prototype, {
   constructor: {value: Simple, enumerable: false, writable: true, configurable: true}
 });
+
 Simple.prototype.release = function() {
   this.emit("finalize");
   this.releaseInstance();
