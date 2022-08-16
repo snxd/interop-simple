@@ -33,7 +33,7 @@ bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *N
     float64_t ValueFloat = 0;
     int64_t ValueInt64 = 0;
     bool ValueBool = false;
-    char *ValuePtr = NULL;
+    const char *ValuePtr = NULL;
 
     if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true)
         Simple_SetStringProperty(Simple, ValuePtr);
@@ -49,7 +49,7 @@ bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *N
 bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type, const char *Notification, const void *Sender,
                                          echandle DictionaryHandle) {
     SimpleStruct *Simple = (SimpleStruct *)UserPtr;
-    char *ValuePtr = NULL;
+    const char *ValuePtr = NULL;
 
     if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true) {
         // Do something with value
@@ -137,7 +137,7 @@ bool Simple_GetStringProperty(void *SimpleContext, char *Property, int32_t MaxPr
     return true;
 }
 
-bool Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr) {
+bool Simple_GetStringPropertyPtr(void *SimpleContext, const char **PropertyPtr) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     *PropertyPtr = Simple->StringProperty;
     return true;
@@ -182,8 +182,8 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
     int32_t RetVal = false;
     int32_t ReturnValue = false;
     bool ValueBool = 0;
-    char *Method = NULL;
-    char *ValueString = NULL;
+    const char *Method = NULL;
+    const char *ValueString = NULL;
 
     if (IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "method", &Method) == false)
         return false;
