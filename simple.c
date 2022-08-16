@@ -247,7 +247,7 @@ bool Simple_Create(void **SimpleContext) {
 
     NotificationCenter_AddInstanceObserver("Simple", "Update", Simple, Simple, Simple_Notification_OnUpdate);
 
-    memset(Simple->StringProperty, 0, Element_Count(Simple->StringProperty));
+    memset(Simple->StringProperty, 0, sizeof(Simple->StringProperty));
 
     *SimpleContext = Simple;
     return true;
