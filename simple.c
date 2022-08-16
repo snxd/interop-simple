@@ -119,8 +119,10 @@ bool Simple_SetStringProperty(void *SimpleContext, char *Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     char OldProperty[320] = {0};
 
-    String_CopyLength(OldProperty, Simple->StringProperty, 320);
-    String_CopyLength(Simple->StringProperty, Property, 320);
+    strncpy(OldProperty, Simple->StringProperty, sizeof(OldProperty));
+    OldProperty[sizeof(OldProperty) - 1] = 0;
+    strncpy(Simple->StringProperty, Property, sizeof(Simple->StringProperty));
+    Simple->StringProperty[sizeof(Simple->StringProperty) - 1] = 0;
 
     // FireWithJSON format: use %js for javascript string - automatically escapes string
     // Use after delay because I don't need it to wait for the return
@@ -133,7 +135,8 @@ bool Simple_SetStringProperty(void *SimpleContext, char *Property) {
 
 bool Simple_GetStringProperty(void *SimpleContext, char *Property, int32_t MaxPropertyLength) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    String_CopyLength(Property, Simple->StringProperty, MaxPropertyLength);
+    strncpy(Property, Simple->StringProperty, MaxPropertyLength);
+    Property[MaxPropertyLength - 1] = 0;
     return true;
 }
 
@@ -160,7 +163,8 @@ bool Simple_StartValueRequest(void *SimpleContext) {
 
 bool Simple_GetInstanceId(void *SimpleContext, char *String, int32_t MaxString) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    String_CopyLength(String, Class_InstanceId(Simple), MaxString);
+    strncpy(String, Class_InstanceId(Simple), MaxString);
+    String[MaxString - 1] = 0;
     return true;
 }
 
@@ -188,39 +192,39 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
     if (IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "method", &Method) == false)
         return false;
 
-    if (String_Compare(Method, "setInt64Property") == true) {
+    if (strcmp(Method, "setInt64Property") == 0) {
         RetVal = IDictionary_GetInt64ByKey(MethodDictionaryHandle, "value", &Value64);
         if (RetVal == true)
             ReturnValue = Simple_SetInt64Property(SimpleContext, Value64);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (String_Compare(Method, "getInt64Property") == true) {
+    } else if (strcmp(Method, "getInt64Property") == 0) {
         RetVal = Simple_GetInt64Property(Simple, &Value64);
         IDictionary_AddInt64(ReturnDictionaryHandle, "returnValue", Value64, &ItemHandle);
-    } else if (String_Compare(Method, "setFloat64Property") == true) {
+    } else if (strcmp(Method, "setFloat64Property") == 0) {
         RetVal = IDictionary_GetFloat64ByKey(MethodDictionaryHandle, "value", &ValueFloat64);
         if (RetVal == true)
             ReturnValue = Simple_SetFloat64Property(SimpleContext, ValueFloat64);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (String_Compare(Method, "getFloat64Property") == true) {
+    } else if (strcmp(Method, "getFloat64Property") == 0) {
         RetVal = Simple_GetFloat64Property(Simple, &ValueFloat64);
         IDictionary_AddFloat64(ReturnDictionaryHandle, "returnValue", ValueFloat64, &ItemHandle);
-    } else if (String_Compare(Method, "setBooleanProperty") == true) {
+    } else if (strcmp(Method, "setBooleanProperty") == 0) {
         RetVal = IDictionary_GetBooleanByKey(MethodDictionaryHandle, "value", &ValueBool);
         if (RetVal == true)
             ReturnValue = Simple_SetBooleanProperty(SimpleContext, ValueBool);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (String_Compare(Method, "getBooleanProperty") == true) {
+    } else if (strcmp(Method, "getBooleanProperty") == 0) {
         RetVal = Simple_GetBooleanProperty(Simple, &ValueBool);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ValueBool, &ItemHandle);
-    } else if (String_Compare(Method, "setStringProperty") == true) {
+    } else if (strcmp(Method, "setStringProperty") == 0) {
         RetVal = IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "value", &ValueString);
         if (RetVal == true)
             ReturnValue = Simple_SetStringProperty(SimpleContext, ValueString);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (String_Compare(Method, "getStringProperty") == true) {
+    } else if (strcmp(Method, "getStringProperty") == 0) {
         RetVal = Simple_GetStringPropertyPtr(Simple, &ValueString);
         IDictionary_AddString(ReturnDictionaryHandle, "returnValue", ValueString, &ItemHandle);
-    } else if (String_Compare(Method, "startValueRequest") == true) {
+    } else if (strcmp(Method, "startValueRequest") == 0) {
         RetVal = Simple_StartValueRequest(Simple);
         IDictionary_AddInt64(ReturnDictionaryHandle, "returnValue", RetVal, &ItemHandle);
     }
