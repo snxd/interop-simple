@@ -20,7 +20,7 @@ bool Simple_GetBooleanProperty(void *SimpleContext, bool *Property);
 
 bool Simple_SetStringProperty(void *SimpleContext, char *Property);
 bool Simple_GetStringProperty(void *SimpleContext, char *Property, int32_t MaxPropertyLength);
-bool Simple_GetStringPropertyPtr(void *SimpleContext, char **PropertyPtr);
+bool Simple_GetStringPropertyPtr(void *SimpleContext, const char **PropertyPtr);
 
 bool Simple_StartValueRequest(void *SimpleContext);
 
