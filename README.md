@@ -44,20 +44,30 @@ cmake --build .
 
 1. Compile the solution or project for your platform
 2. Copy the dynamic library from the target directory to the host.exe directory
-3. Edit workflow.json and add the following task to be run in the load entry point: ```
-    "loadSimple": {
-        "type": "interopLoad",
-        "name": "simple",
-        "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
-    },```
-4. Edit workflow.json and add the following task to be run in the unload entry point: ```
-    "unloadSimple": {
-        "type": "interopUnload",
-        "name": "simple",
-        "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
-    },```
-5. Copy simple.js and simpletest.js from the js directory to the skin directory
-6. Open main.html and insert the following scripts after main.js: ```
-    <script src="simple.js" type="text/javascript"></script>
-    <script src="simpletest.js" type="text/javascript"></script>```
-7. Run host.exe with --disablesecurity as the first argument (during production if you sign the dll you won't need this).
+3. Edit *workflow.json* and add the following task to be run in the load entry point:
+```json
+"loadSimple": {
+    "type": "interopLoad",
+    "name": "simple",
+    "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
+},
+```
+
+4. Edit *workflow.json* and add the following task to be run in the unload entry point:
+```json
+"unloadSimple": {
+    "type": "interopUnload",
+    "name": "simple",
+    "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
+},
+```
+
+5. Copy *simple.js* and *simpletest.js* from the js directory to the skin directory
+6. Open *main.html* and insert the following scripts after the reference to *main.js*. Example: 
+```html
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="simple.js"></script>
+<script type="text/javascript" src="simpletest.js"></script>
+```
+
+7. Run host.exe with `--disablesecurity` as the first argument (during production if you sign the dll you will not need this).
