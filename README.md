@@ -22,34 +22,34 @@ CMake is a makefile generator that produces solutions and project files for vari
 #### Visual Studio
 
 ```
-cmake .
-cmake --build . --config Debug
+cmake -S . -B build -A Win32
+cmake --build build --config Debug
 ```
 
 #### Xcode
 
 ```
-cmake . -G Xcode
-cmake --build . --config Debug
+cmake -S . -B build -G Xcode
+cmake --build build --config Debug
 ```
 
 #### Unix Makefiles
 
 ```
-cmake . -DCMAKE_BUILD_TYPE=Debug
-cmake --build .
+cmake -S . -B build -D CMAKE_BUILD_TYPE=Debug
+cmake --build build
 ```
 
 ### Setup Instructions
 
-1. Compile the solution or project for your platform
-2. Copy the dynamic library from the target directory to the host.exe directory
+1. Compile the project or solution. The target architecture must match the architecture of the DIRECT client.
+2. Copy the dynamic library from the target directory to the host directory
 3. Edit *workflow.json* and add the following task to be run in the load entry point:
 ```json
 "loadSimple": {
     "type": "interopLoad",
     "name": "simple",
-    "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
+    "path": "{moduleDirectory}{libraryPrefix}simple.{libraryExtension}"
 },
 ```
 
@@ -58,7 +58,7 @@ cmake --build .
 "unloadSimple": {
     "type": "interopUnload",
     "name": "simple",
-    "path": "{ModuleDirectory}{LibraryPrefix}simple.{LibraryExtension}"
+    "path": "{moduleDirectory}{libraryPrefix}simple.{libraryExtension}"
 },
 ```
 
