@@ -30,9 +30,11 @@ cmake -S . -B build
 cmake --build build --config Debug
 ```
 
+The target architecture of the shared library must match the architecture of the DIRECT client you are using. For example, if you are using host.exe for 32-bit Windows, then you must configure for x86 by using CMake argument `-A Win32`.
+
 ### Setup Instructions
 
-First copy the shared library to the directory where you intended to load it from. For our example, we use the same directory as the client's executable: `{moduleAppDirectory}`
+First copy the shared library to the directory where you intended to load it from. In our steps below we use the same directory as the client's executable: `{moduleAppDirectory}`.
 
 ### JavaScript Integration
 
