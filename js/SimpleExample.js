@@ -65,14 +65,19 @@ function interopUnloaded() {
   }
 }
 
-interop.on("load", function(info) {
-  if (info.name === "simple") {
-    interopLoaded();
+interop.on("load", function({name, successful}) {
+  if (name === "simple") {
+    if (successful) {
+      console.log("Simple interop loaded successfully");
+      interopLoaded();
+    } else {
+      console.log("Simple interop failed to load");
+    }
   }
 });
 
-interop.on("unload", function(info) {
-  if (info.name === "simple") {
+interop.on("unload", function({name}) {
+  if (name === "simple") {
     interopUnloaded();
   }
 });
