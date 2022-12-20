@@ -13,7 +13,7 @@ This is an example interop that shows how to create a simple javascript object.
 
 ### Requirements
 
-* CMake 2.8
+* CMake 3.15
 
 ### Build Instructions
 
@@ -22,7 +22,7 @@ CMake is a makefile generator that produces solutions and project files for vari
 #### Visual Studio
 
 ```
-cmake -S . -B build -A Win32
+cmake -S . -B build -A Win32 -D CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
 cmake --build build --config Debug
 ```
 
@@ -63,7 +63,7 @@ cmake --build build
 ```
 
 5. Copy *simple.js* and *simpletest.js* from the js directory to the skin directory
-6. Open *main.html* and insert the following scripts after the reference to *main.js*. Example: 
+6. Open *main.html* and insert the following scripts after the reference to *main.js*. Example:
 ```html
 <script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="simple.js"></script>

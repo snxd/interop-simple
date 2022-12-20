@@ -1,27 +1,21 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
 
 include_directories(.)
 include_directories(interop)
 
 add_subdirectory(interop)
 
-set(SIMPLE_SRC
+set(SIMPLE_SRCS
+    simple.h
     simple.c
     simpleinterop.c)
-set(SIMPLE_HEADERS
-    simple.h)
-
 if(WIN32)
-    list(APPEND SIMPLE_SRC windows/resource.rc)
-    list(APPEND SIMPLE_HEADERS windows/resource.h)
+    list(APPEND SIMPLE_SRCS
+        windows/resource.h
+        windows/resource.rc)
 endif()
 
 if(WIN32)
-    set(CMAKE_C_FLAGS_DEBUG "/MTd")
-    set(CMAKE_C_FLAGS_RELEASE "/MT")
-    set(CMAKE_C_FLAGS_MINSIZEREL "/MT")
-    set(CMAKE_C_FLAGS_RELWITHDEBINFO "/MT")
-
     set(CMAKE_SHARED_LINKER_FLAGS
         "${CMAKE_MODULE_LINKER_FLAGS} \"/DEF:${CMAKE_CURRENT_SOURCE_DIR}/windows/simple.def\"")
 elseif(APPLE)
@@ -36,6 +30,6 @@ endif()
 
 project(simple C)
 
-add_library(${PROJECT_NAME} SHARED ${SIMPLE_SRC} ${SIMPLE_HEADERS})
+add_library(${PROJECT_NAME} SHARED ${SIMPLE_SRCS})
 set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
 target_link_libraries(${PROJECT_NAME} interoplib)
