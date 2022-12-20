@@ -18,7 +18,7 @@ bool Simple_GetFloat64Property(void *SimpleContext, float64_t *Property);
 bool Simple_SetBooleanProperty(void *SimpleContext, bool Property);
 bool Simple_GetBooleanProperty(void *SimpleContext, bool *Property);
 
-bool Simple_SetStringProperty(void *SimpleContext, char *Property);
+bool Simple_SetStringProperty(void *SimpleContext, const char *Property);
 bool Simple_GetStringProperty(void *SimpleContext, char *Property, int32_t MaxPropertyLength);
 bool Simple_GetStringPropertyPtr(void *SimpleContext, const char **PropertyPtr);
 

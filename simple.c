@@ -33,7 +33,7 @@ bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *N
     float64_t ValueFloat = 0;
     int64_t ValueInt64 = 0;
     bool ValueBool = false;
-    const char *ValuePtr = NULL;
+    char *ValuePtr = NULL;
 
     if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true)
         Simple_SetStringProperty(Simple, ValuePtr);
@@ -115,7 +115,7 @@ bool Simple_GetBooleanProperty(void *SimpleContext, bool *Property) {
     return true;
 }
 
-bool Simple_SetStringProperty(void *SimpleContext, char *Property) {
+bool Simple_SetStringProperty(void *SimpleContext, const char *Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     char OldProperty[320] = {0};
 
