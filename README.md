@@ -13,7 +13,7 @@ This is an example interop that shows how to run native code using a simple Java
 
 ### Requirements
 
-* CMake 3.0
+* CMake 3.15
 
 ### Build Instructions
 
