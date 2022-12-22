@@ -242,7 +242,7 @@ bool Simple_Create(void **SimpleContext) {
     if (Simple == NULL)
         return false;
     memset(Simple, 0, sizeof(SimpleStruct));
-    Interop_GenerateInstanceId(Simple->Class.InstanceId, 40);
+    Interop_GenerateInstanceId(Simple->Class.InstanceId, sizeof(Simple->Class.InstanceId));
 
     Simple->Class.RefCount = 1;
     Simple->Int64Property = 0;
