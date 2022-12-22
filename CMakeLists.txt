@@ -5,7 +5,7 @@ add_subdirectory(lib/interop)
 set(SIMPLE_SRCS
     simple.h
     simple.c
-    simpleinterop.c)
+    interop.c)
 if(WIN32)
     list(APPEND SIMPLE_SRCS
         windows/resource.h
