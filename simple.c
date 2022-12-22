@@ -60,7 +60,7 @@ bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type, const 
 }
 
 /********************************************************************/
-// Concrete Functions
+// Concrete functions
 
 bool Simple_SetInt64Property(void *SimpleContext, int64_t Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
@@ -159,7 +159,7 @@ bool Simple_StartValueRequest(void *SimpleContext) {
 }
 
 /*********************************************************************/
-// Interop Functions
+// Interop functions
 
 bool Simple_GetInstanceId(void *SimpleContext, char *String, int32_t MaxString) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
