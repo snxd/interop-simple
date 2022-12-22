@@ -27,8 +27,8 @@ typedef struct SimpleStruct {
 /********************************************************************/
 // Notification functions
 
-bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *Notification, const void *Sender,
-                                  echandle DictionaryHandle) {
+static bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *Notification, const void *Sender,
+                                         echandle DictionaryHandle) {
     SimpleStruct *Simple = (SimpleStruct *)UserPtr;
     float64_t ValueFloat = 0;
     int64_t ValueInt64 = 0;
@@ -46,8 +46,8 @@ bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *N
     return true;
 }
 
-bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type, const char *Notification, const void *Sender,
-                                         echandle DictionaryHandle) {
+static bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type, const char *Notification,
+                                                const void *Sender, echandle DictionaryHandle) {
     SimpleStruct *Simple = (SimpleStruct *)UserPtr;
     const char *ValuePtr = NULL;
 
