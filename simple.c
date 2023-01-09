@@ -33,7 +33,7 @@ static bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const 
     float64_t ValueFloat = 0;
     int64_t ValueInt64 = 0;
     bool ValueBool = false;
-    char *ValuePtr = NULL;
+    const char *ValuePtr = NULL;
 
     if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true)
         Simple_SetStringProperty(Simple, ValuePtr);
