@@ -12,22 +12,20 @@ if(WIN32)
         windows/resource.rc)
 endif()
 
-if(WIN32)
-    set(CMAKE_SHARED_LINKER_FLAGS
-        "${CMAKE_MODULE_LINKER_FLAGS} \"/DEF:${CMAKE_CURRENT_SOURCE_DIR}/windows/simple.def\"")
-elseif(APPLE)
-    set(CMAKE_XCODE_ATTRIBUTE_EXPORTED_SYMBOLS_FILE
-        "${CMAKE_CURRENT_SOURCE_DIR}/mac/simple.def")
-elseif(UNIX)
-    set(CMAKE_SHARED_LINKER_FLAGS
-        "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/linux/simple.def")
-    set(CMAKE_SHARED_LINKER_FLAGS
-        "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--gc-sections")
-endif()
-
 project(simple C)
 
-add_library(${PROJECT_NAME} SHARED ${SIMPLE_SRCS})
-set_target_properties(${PROJECT_NAME} PROPERTIES POSITION_INDEPENDENT_CODE ON)
-target_link_libraries(${PROJECT_NAME} interoplib)
-target_compile_definitions(${PROJECT_NAME} PRIVATE $<$<BOOL:WIN32>:_CRT_SECURE_NO_WARNINGS>)
+add_library(simple SHARED ${SIMPLE_SRCS})
+target_link_libraries(simple interoplib)
+target_compile_definitions(simple PRIVATE $<$<BOOL:WIN32>:_CRT_SECURE_NO_WARNINGS>)
+set_target_properties(simple PROPERTIES POSITION_INDEPENDENT_CODE ON)
+if(MSVC)
+    target_link_options(simple PRIVATE
+        "/DEF:\"${CMAKE_CURRENT_SOURCE_DIR}/windows/simple.def\"")
+elseif(APPLE)
+    set_target_properties(simple PROPERTIES
+        XCODE_ATTRIBUTE_EXPORTED_SYMBOLS_FILE "${CMAKE_CURRENT_SOURCE_DIR}/mac/simple.exp")
+else()
+    target_link_options(simple PRIVATE
+        "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/linux/simple.map"
+        "-Wl,--gc-sections")
+endif()
