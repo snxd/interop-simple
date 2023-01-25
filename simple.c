@@ -68,7 +68,7 @@ bool Simple_SetInt64Property(void *SimpleContext, int64_t Property) {
 
     Simple->Int64Property = Property;
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Simple, 0,
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(Simple), 0,
                                               "{ \"newValue\": %lld, \"oldValue\": %lld }", Simple->Int64Property,
                                               OldProperty);
     return true;
@@ -86,8 +86,9 @@ bool Simple_SetFloat64Property(void *SimpleContext, float64_t Property) {
 
     Simple->Float64Property = Property;
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Simple, 0, "{ \"newValue\": %g, \"oldValue\": %g }",
-                                              Simple->Float64Property, OldProperty);
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(Simple), 0,
+                                              "{ \"newValue\": %g, \"oldValue\": %g }", Simple->Float64Property,
+                                              OldProperty);
     return true;
 }
 
@@ -103,9 +104,9 @@ bool Simple_SetBooleanProperty(void *SimpleContext, bool Property) {
 
     Simple->BooleanProperty = Property;
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Simple, 0, "{ \"newValue\": %s, \"oldValue\": %s }",
-                                              Simple->BooleanProperty ? "true" : "false",
-                                              OldProperty ? "true" : "false");
+    NotificationCenter_FireAfterDelayWithJSON(
+        "Simple", "Changed", Class_InstanceId(Simple), 0, "{ \"newValue\": %s, \"oldValue\": %s }",
+        Simple->BooleanProperty ? "true" : "false", OldProperty ? "true" : "false");
     return true;
 }
 
@@ -127,7 +128,7 @@ bool Simple_SetStringProperty(void *SimpleContext, const char *Property) {
     // FireWithJSON format: use %js for javascript string - automatically escapes string
     // Use after delay because I don't need it to wait for the return
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Simple, 0,
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(Simple), 0,
                                               "{ \"newValue\": \"%js\", \"oldValue\": \"%js\" }",
                                               Simple->StringProperty, OldProperty);
     return true;
@@ -150,11 +151,11 @@ bool Simple_StartValueRequest(void *SimpleContext) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
 
     // Add an observer to wait for a response to our request
-    NotificationCenter_AddInstanceObserver("Simple", "ValueResponse", Simple, Simple,
+    NotificationCenter_AddInstanceObserver("Simple", "ValueResponse", Class_InstanceId(Simple), Simple,
                                            Simple_Notification_OnValueResponse);
 
     // Send a request for a value
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "ValueRequest", Simple, 0, "{}");
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "ValueRequest", Class_InstanceId(Simple), 0, "{}");
     return true;
 }
 
@@ -249,7 +250,8 @@ bool Simple_Create(void **SimpleContext) {
     Simple->Float64Property = 0.f;
     Simple->BooleanProperty = false;
 
-    NotificationCenter_AddInstanceObserver("Simple", "Update", Simple, Simple, Simple_Notification_OnUpdate);
+    NotificationCenter_AddInstanceObserver("Simple", "Update", Class_InstanceId(Simple), Simple,
+                                           Simple_Notification_OnUpdate);
 
     memset(Simple->StringProperty, 0, sizeof(Simple->StringProperty));
 
@@ -274,9 +276,10 @@ int32_t Simple_Release(void **SimpleContext) {
 
     *SimpleContext = NULL;
     if (--Simple->Class.RefCount == 0) {
-        NotificationCenter_RemoveInstanceObserver("Simple", "ValueResponse", Simple, Simple,
+        NotificationCenter_RemoveInstanceObserver("Simple", "ValueResponse", Class_InstanceId(Simple), Simple,
                                                   Simple_Notification_OnValueResponse);
-        NotificationCenter_RemoveInstanceObserver("Simple", "Update", Simple, Simple, Simple_Notification_OnUpdate);
+        NotificationCenter_RemoveInstanceObserver("Simple", "Update", Class_InstanceId(Simple), Simple,
+                                                  Simple_Notification_OnUpdate);
         free(Simple);
         return 0;
     }
