@@ -2,6 +2,9 @@
 
 This is an example interop that shows how to run native code using a simple JavaScript object.
 
+> **Note**
+> Please use the branch corresponding to your version of DIRECT.
+
 ### Contents
 
 * js/Simple.js - JavaScript class
