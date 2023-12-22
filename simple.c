@@ -37,10 +37,10 @@ static bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const 
 
     if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true)
         Simple_SetStringProperty(Simple, ValuePtr);
-    if (IDictionary_GetFloat64ByKey(DictionaryHandle, "Float64", &ValueFloat) == true)
-        Simple_SetFloat64Property(Simple, ValueFloat);
+    if (IDictionary_GetFloatByKey(DictionaryHandle, "Float64", &ValueFloat) == true)
+        Simple_SetFloatProperty(Simple, ValueFloat);
     if (IDictionary_GetInt64ByKey(DictionaryHandle, "Int64", &ValueInt64) == true)
-        Simple_SetInt64Property(Simple, ValueInt64);
+        Simple_SetIntProperty(Simple, ValueInt64);
     if (IDictionary_GetBooleanByKey(DictionaryHandle, "Boolean", &ValueBool) == true)
         Simple_SetBooleanProperty(Simple, ValueBool);
     return true;
@@ -62,7 +62,7 @@ static bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type,
 /********************************************************************/
 // Concrete functions
 
-bool Simple_SetInt64Property(void *SimpleContext, int64_t Property) {
+bool Simple_SetIntProperty(void *SimpleContext, int64_t Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     int64_t OldProperty = Simple->Int64Property;
 
@@ -74,13 +74,13 @@ bool Simple_SetInt64Property(void *SimpleContext, int64_t Property) {
     return true;
 }
 
-bool Simple_GetInt64Property(void *SimpleContext, int64_t *Property) {
+bool Simple_GetIntProperty(void *SimpleContext, int64_t *Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     *Property = Simple->Int64Property;
     return true;
 }
 
-bool Simple_SetFloat64Property(void *SimpleContext, float64_t Property) {
+bool Simple_SetFloatProperty(void *SimpleContext, float64_t Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     float64_t OldProperty = Simple->Float64Property;
 
@@ -92,7 +92,7 @@ bool Simple_SetFloat64Property(void *SimpleContext, float64_t Property) {
     return true;
 }
 
-bool Simple_GetFloat64Property(void *SimpleContext, float64_t *Property) {
+bool Simple_GetFloatProperty(void *SimpleContext, float64_t *Property) {
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     *Property = Simple->Float64Property;
     return true;
@@ -182,7 +182,7 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
 
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     echandle ItemHandle = NULL;
-    float64_t ValueFloat64 = 0;
+    float64_t ValueFloat = 0;
     int64_t Value64 = 0;
     int32_t RetVal = false;
     int32_t ReturnValue = false;
@@ -196,19 +196,19 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
     if (strcmp(Method, "setInt64Property") == 0) {
         RetVal = IDictionary_GetInt64ByKey(MethodDictionaryHandle, "value", &Value64);
         if (RetVal == true)
-            ReturnValue = Simple_SetInt64Property(SimpleContext, Value64);
+            ReturnValue = Simple_SetIntProperty(SimpleContext, Value64);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (strcmp(Method, "getInt64Property") == 0) {
-        RetVal = Simple_GetInt64Property(Simple, &Value64);
-        IDictionary_AddInt64(ReturnDictionaryHandle, "returnValue", Value64, &ItemHandle);
-    } else if (strcmp(Method, "setFloat64Property") == 0) {
-        RetVal = IDictionary_GetFloat64ByKey(MethodDictionaryHandle, "value", &ValueFloat64);
+    } else if (strcmp(Method, "getIntProperty") == 0) {
+        RetVal = Simple_GetIntProperty(Simple, &Value64);
+        IDictionary_AddInt(ReturnDictionaryHandle, "returnValue", Value64, &ItemHandle);
+    } else if (strcmp(Method, "setFloatProperty") == 0) {
+        RetVal = IDictionary_GetFloatByKey(MethodDictionaryHandle, "value", &ValueFloat);
         if (RetVal == true)
-            ReturnValue = Simple_SetFloat64Property(SimpleContext, ValueFloat64);
+            ReturnValue = Simple_SetFloatProperty(SimpleContext, ValueFloat);
         IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (strcmp(Method, "getFloat64Property") == 0) {
-        RetVal = Simple_GetFloat64Property(Simple, &ValueFloat64);
-        IDictionary_AddFloat64(ReturnDictionaryHandle, "returnValue", ValueFloat64, &ItemHandle);
+    } else if (strcmp(Method, "getFloatProperty") == 0) {
+        RetVal = Simple_GetFloatProperty(Simple, &ValueFloat);
+        IDictionary_AddFloat(ReturnDictionaryHandle, "returnValue", ValueFloat, &ItemHandle);
     } else if (strcmp(Method, "setBooleanProperty") == 0) {
         RetVal = IDictionary_GetBooleanByKey(MethodDictionaryHandle, "value", &ValueBool);
         if (RetVal == true)
@@ -227,7 +227,7 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
         IDictionary_AddString(ReturnDictionaryHandle, "returnValue", ValueString, &ItemHandle);
     } else if (strcmp(Method, "startValueRequest") == 0) {
         RetVal = Simple_StartValueRequest(Simple);
-        IDictionary_AddInt64(ReturnDictionaryHandle, "returnValue", RetVal, &ItemHandle);
+        IDictionary_AddInt(ReturnDictionaryHandle, "returnValue", RetVal, &ItemHandle);
     }
 
     return RetVal;

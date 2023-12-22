@@ -36,17 +36,17 @@ Simple.prototype.releaseInstance = function() {
  * Gets an integer value
  * @type int
  */
-Simple.prototype.getInt64Property = function() {
+Simple.prototype.getIntProperty = function() {
   return this.invoke({
-    "method": "getInt64Property"
+    "method": "getIntProperty"
   });
 };
 /**
  * Sets an integer value
  */
-Simple.prototype.setInt64Property = function(value) {
+Simple.prototype.setIntProperty = function(value) {
   return this.invoke({
-    "method": "setInt64Property",
+    "method": "setIntProperty",
     "value": value
   });
 };
@@ -54,17 +54,17 @@ Simple.prototype.setInt64Property = function(value) {
  * Gets a double value
  * @type float
  */
-Simple.prototype.getFloat64Property = function() {
+Simple.prototype.getFloatProperty = function() {
   return this.invoke({
-    "method": "getFloat64Property"
+    "method": "getFloatProperty"
   });
 };
 /**
  * Sets a double value
  */
-Simple.prototype.setFloat64Property = function(value) {
+Simple.prototype.setFloatProperty = function(value) {
   return this.invoke({
-    "method": "setFloat64Property",
+    "method": "setFloatProperty",
     "value": value
   });
 };
