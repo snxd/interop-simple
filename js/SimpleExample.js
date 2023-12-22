@@ -21,10 +21,10 @@ function interopLoaded() {
 
   // Calls from JS to C are synchronous
   console.log("Simple InstanceId - " + simple.instanceId);
-  simple.setInt64Property(406);
-  console.log("Simple Int64 - " + simple.getInt64Property());
-  simple.setFloat64Property(40.1);
-  console.log("Simple Float64 - " + simple.getFloat64Property());
+  simple.setIntProperty(406);
+  console.log("Simple Int - " + simple.getIntProperty());
+  simple.setFloatProperty(40.1);
+  console.log("Simple Float - " + simple.getFloatProperty());
   simple.setBooleanProperty(true);
   console.log("Simple Boolean - " + simple.getBooleanProperty());
   simple.setStringProperty("String Test");

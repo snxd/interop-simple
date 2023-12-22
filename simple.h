@@ -9,11 +9,11 @@ extern "C" {
 
 /*********************************************************************/
 
-bool Simple_SetInt64Property(void *SimpleContext, int64_t Property);
-bool Simple_GetInt64Property(void *SimpleContext, int64_t *Property);
+bool Simple_SetIntProperty(void *SimpleContext, int64_t Property);
+bool Simple_GetIntProperty(void *SimpleContext, int64_t *Property);
 
-bool Simple_SetFloat64Property(void *SimpleContext, float64_t Property);
-bool Simple_GetFloat64Property(void *SimpleContext, float64_t *Property);
+bool Simple_SetFloatProperty(void *SimpleContext, float64_t Property);
+bool Simple_GetFloatProperty(void *SimpleContext, float64_t *Property);
 
 bool Simple_SetBooleanProperty(void *SimpleContext, bool Property);
 bool Simple_GetBooleanProperty(void *SimpleContext, bool *Property);
