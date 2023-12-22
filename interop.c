@@ -11,10 +11,8 @@ bool Interop_CreateInstance(const char *TypeName, char *InstanceId, int32_t Inst
                             Interop_ExecuteCallback Execute, Interop_InvokeInstanceCallback *InvokeInstance,
                             Interop_ReleaseInstanceCallback *ReleaseInstance,
                             Interop_ProcessInstanceCallback *ProcessInstance, void **UserPtr) {
-    void *Context;
-
     if (strcmp(TypeName, "SSN.Simple") == 0) {
-        Simple_Create(&Context);
+        void *Context = Simple_Create();
         Simple_GetInstanceId(Context, InstanceId, InstanceIdLength);
 
         *InvokeInstance = Simple_Invoke;
