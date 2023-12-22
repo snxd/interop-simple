@@ -10,17 +10,16 @@ extern "C" {
 /*********************************************************************/
 
 bool Simple_SetIntProperty(void *SimpleContext, int64_t Property);
-bool Simple_GetIntProperty(void *SimpleContext, int64_t *Property);
+int64_t Simple_GetIntProperty(void *SimpleContext);
 
 bool Simple_SetFloatProperty(void *SimpleContext, float64_t Property);
-bool Simple_GetFloatProperty(void *SimpleContext, float64_t *Property);
+float64_t Simple_GetFloatProperty(void *SimpleContext);
 
 bool Simple_SetBooleanProperty(void *SimpleContext, bool Property);
-bool Simple_GetBooleanProperty(void *SimpleContext, bool *Property);
+bool Simple_GetBooleanProperty(void *SimpleContext);
 
 bool Simple_SetStringProperty(void *SimpleContext, const char *Property);
-bool Simple_GetStringProperty(void *SimpleContext, char *Property, int32_t MaxPropertyLength);
-bool Simple_GetStringPropertyPtr(void *SimpleContext, const char **PropertyPtr);
+const char *Simple_GetStringProperty(void *SimpleContext);
 
 bool Simple_StartValueRequest(void *SimpleContext);
 
@@ -31,7 +30,7 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
 
 /*********************************************************************/
 
-bool Simple_Create(void **SimpleContext);
+void *Simple_Create(void);
 void *Simple_AddRef(void *SimpleContext);
 int32_t Simple_Release(void **SimpleContext);
 
