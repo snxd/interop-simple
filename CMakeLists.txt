@@ -3,9 +3,9 @@ cmake_minimum_required(VERSION 3.15)
 add_subdirectory(lib/interop)
 
 set(SIMPLE_SRCS
-    simple.h
+    interop.c
     simple.c
-    interop.c)
+    simple.h)
 if(WIN32)
     list(APPEND SIMPLE_SRCS
         windows/resource.h
