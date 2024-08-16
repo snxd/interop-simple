@@ -8,14 +8,14 @@ import {createSimple} from "./Simple";
 var simple = null;
 var observer = null;
 
-function interopLoaded() {
+const interopLoaded = () => {
   //notificationCenter.verbose = true;
   //interop.verbose = true;
 
   simple = createSimple();
 
   // Watch for changes in object
-  observer = notificationCenter.addInstanceObserver("Simple", "Changed", simple, function (sender, info) {
+  observer = notificationCenter.addInstanceObserver("Simple", "Changed", simple, (sender, info) => {
     console.log("Simple Changed - {0} -> {1}".format(info.oldValue, info.newValue));
   });
 
@@ -37,7 +37,7 @@ function interopLoaded() {
   // and send a response through the notification center
 
   // Listen for a request for a value
-  observer = notificationCenter.addInstanceObserver("Simple", "ValueRequest", simple, function (sender, info) {
+  observer = notificationCenter.addInstanceObserver("Simple", "ValueRequest", simple, (sender, info) => {
     var response = {"String": "Item"};
     console.log("Simple Value Request/Response - {0} -> {1}"
       .format(JSON.stringify(info), JSON.stringify(response)));
@@ -50,9 +50,9 @@ function interopLoaded() {
 
   // Trigger a request for a value, ideally would be called from C
   simple.startValueRequest();
-}
+};
 
-function interopUnloaded() {
+const interopUnloaded = () => {
   // Release our notification center instance observer
   if (observer) {
     observer.release();
@@ -63,9 +63,9 @@ function interopUnloaded() {
     simple.release();
     simple = null;
   }
-}
+};
 
-interop.on("load", function({name, successful}) {
+interop.on("load", ({name, successful}) => {
   if (name === "simple") {
     if (successful) {
       console.log("Simple interop loaded successfully");
@@ -76,7 +76,7 @@ interop.on("load", function({name, successful}) {
   }
 });
 
-interop.on("unload", function({name}) {
+interop.on("unload", ({name}) => {
   if (name === "simple") {
     interopUnloaded();
   }
