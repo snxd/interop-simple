@@ -107,7 +107,7 @@ Simple.prototype.setStringProperty = function(value) {
 /**
  * Starts a request for a value
  */
-Simple.prototype.startValueRequest = function(value) {
+Simple.prototype.startValueRequest = function() {
   return this.invoke({
     "method": "startValueRequest"
   });
