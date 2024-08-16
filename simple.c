@@ -171,14 +171,14 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
 
     SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
     echandle ItemHandle = NULL;
-    int32_t RetVal = false;
+    int32_t RetVal = true;
     int32_t ReturnValue = false;
     const char *Method = NULL;
 
     if (IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "method", &Method) == false)
         return false;
 
-    if (strcmp(Method, "setInt64Property") == 0) {
+    if (strcmp(Method, "setIntProperty") == 0) {
         int64_t Value64 = 0;
         RetVal = IDictionary_GetInt64ByKey(MethodDictionaryHandle, "value", &Value64);
         if (RetVal == true)
@@ -217,6 +217,8 @@ bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandl
     } else if (strcmp(Method, "startValueRequest") == 0) {
         RetVal = Simple_StartValueRequest(Simple);
         IDictionary_AddInt(ReturnDictionaryHandle, "returnValue", RetVal, &ItemHandle);
+    } else {
+        RetVal = false;
     }
 
     return RetVal;
