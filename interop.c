@@ -7,28 +7,29 @@
 
 /*********************************************************************/
 
-bool Interop_CreateInstance(const char *TypeName, char *InstanceId, int32_t InstanceIdLength, void *ExecuteUserPtr,
-                            Interop_ExecuteCallback Execute, Interop_InvokeInstanceCallback *InvokeInstance,
-                            Interop_ReleaseInstanceCallback *ReleaseInstance,
-                            Interop_ProcessInstanceCallback *ProcessInstance, void **UserPtr) {
-    if (strcmp(TypeName, "SSN.Simple") == 0) {
-        void *Context = Simple_Create();
-        Simple_GetInstanceId(Context, InstanceId, InstanceIdLength);
+bool Interop_CreateInstance(const char *type_name, char *instance_id, int32_t instance_id_length,
+                            void *execute_user_ptr, Interop_ExecuteCallback execute,
+                            Interop_InvokeInstanceCallback *invoke_instance,
+                            Interop_ReleaseInstanceCallback *release_instance,
+                            Interop_ProcessInstanceCallback *process_instance, void **user_ptr) {
+    if (strcmp(type_name, "SSN.Simple") == 0) {
+        void *context = Simple_Create();
+        Simple_GetInstanceId(context, instance_id, instance_id_length);
 
-        *InvokeInstance = Simple_Invoke;
-        *ReleaseInstance = Simple_Release;
-        *ProcessInstance = NULL;
+        *invoke_instance = Simple_Invoke;
+        *release_instance = Simple_Release;
+        *process_instance = NULL;
 
         // Uncomment this line in if you want the process call
-        // *ProcessInstance = Simple_Process;
+        // *process_instance = Simple_Process;
 
-        *UserPtr = Context;
+        *user_ptr = context;
         return true;
     }
     return false;
 }
 
-bool Interop_SetOption(const char *Key, void *Value) {
+bool Interop_SetOption(const char *key, void *value) {
     return true;
 }
 
