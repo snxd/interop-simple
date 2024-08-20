@@ -18,42 +18,42 @@ typedef struct SimpleStruct {
     ClassStruct Class;
 
     // Object data
-    int64_t IntProperty;
-    float64_t FloatProperty;
-    int32_t BooleanProperty;
-    char StringProperty[320];
+    int64_t int_property;
+    float64_t float_property;
+    int32_t boolean_property;
+    char string_property[320];
 } SimpleStruct;
 
 /********************************************************************/
 // Notification functions
 
-static bool Simple_Notification_OnUpdate(void *UserPtr, const char *Type, const char *Notification, const char *Sender,
-                                         echandle DictionaryHandle) {
-    SimpleStruct *Simple = (SimpleStruct *)UserPtr;
-    float64_t ValueFloat = 0;
-    int64_t ValueInt64 = 0;
-    bool ValueBool = false;
-    const char *ValuePtr = NULL;
+static bool Notification_OnUpdate(void *user_ptr, const char *type, const char *notification, const char *sender,
+                                  echandle dictionary_handle) {
+    SimpleStruct *simple = (SimpleStruct *)user_ptr;
+    float64_t value_float = 0;
+    int64_t value_int64 = 0;
+    bool value_bool = false;
+    const char *value_ptr = NULL;
 
-    if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true)
-        Simple_SetStringProperty(Simple, ValuePtr);
-    if (IDictionary_GetFloatByKey(DictionaryHandle, "Float", &ValueFloat) == true)
-        Simple_SetFloatProperty(Simple, ValueFloat);
-    if (IDictionary_GetInt64ByKey(DictionaryHandle, "Int", &ValueInt64) == true)
-        Simple_SetIntProperty(Simple, ValueInt64);
-    if (IDictionary_GetBooleanByKey(DictionaryHandle, "Boolean", &ValueBool) == true)
-        Simple_SetBooleanProperty(Simple, ValueBool);
+    if (IDictionary_GetStringPtrByKey(dictionary_handle, "String", &value_ptr))
+        Simple_SetStringProperty(simple, value_ptr);
+    if (IDictionary_GetFloatByKey(dictionary_handle, "Float", &value_float))
+        Simple_SetFloatProperty(simple, value_float);
+    if (IDictionary_GetInt64ByKey(dictionary_handle, "Int", &value_int64))
+        Simple_SetIntProperty(simple, value_int64);
+    if (IDictionary_GetBooleanByKey(dictionary_handle, "Boolean", &value_bool))
+        Simple_SetBooleanProperty(simple, value_bool);
     return true;
 }
 
-static bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type, const char *Notification,
-                                                const char *Sender, echandle DictionaryHandle) {
-    SimpleStruct *Simple = (SimpleStruct *)UserPtr;
-    const char *ValuePtr = NULL;
+static bool Notification_OnValueResponse(void *user_ptr, const char *type, const char *notification, const char *sender,
+                                         echandle dictionary_handle) {
+    SimpleStruct *simple = (SimpleStruct *)user_ptr;
+    const char *value_ptr = NULL;
 
-    if (IDictionary_GetStringPtrByKey(DictionaryHandle, "String", &ValuePtr) == true) {
+    if (IDictionary_GetStringPtrByKey(dictionary_handle, "String", &value_ptr)) {
         // Do something with value
-        printf("%s", ValuePtr);
+        printf("%s", value_ptr);
     }
 
     return true;
@@ -62,207 +62,206 @@ static bool Simple_Notification_OnValueResponse(void *UserPtr, const char *Type,
 /********************************************************************/
 // Concrete functions
 
-bool Simple_SetIntProperty(void *SimpleContext, int64_t Property) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    int64_t OldProperty = Simple->IntProperty;
+bool Simple_SetIntProperty(void *handle, int64_t property) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    const int64_t old_property = simple->int_property;
 
-    Simple->IntProperty = Property;
+    simple->int_property = property;
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(Simple), 0,
-                                              "{ \"newValue\": %lld, \"oldValue\": %lld }", Simple->IntProperty,
-                                              OldProperty);
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(simple), 0,
+                                              "{ \"newValue\": %lld, \"oldValue\": %lld }", simple->int_property,
+                                              old_property);
     return true;
 }
 
-int64_t Simple_GetIntProperty(void *SimpleContext) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    return Simple->IntProperty;
+int64_t Simple_GetIntProperty(void *handle) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    return simple->int_property;
 }
 
-bool Simple_SetFloatProperty(void *SimpleContext, float64_t Property) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    float64_t OldProperty = Simple->FloatProperty;
+bool Simple_SetFloatProperty(void *handle, float64_t Property) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    const float64_t old_property = simple->float_property;
 
-    Simple->FloatProperty = Property;
+    simple->float_property = Property;
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(Simple), 0,
-                                              "{ \"newValue\": %g, \"oldValue\": %g }", Simple->FloatProperty,
-                                              OldProperty);
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(simple), 0,
+                                              "{ \"newValue\": %g, \"oldValue\": %g }", simple->float_property,
+                                              old_property);
     return true;
 }
 
-float64_t Simple_GetFloatProperty(void *SimpleContext) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    return Simple->FloatProperty;
+float64_t Simple_GetFloatProperty(void *handle) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    return simple->float_property;
 }
 
-bool Simple_SetBooleanProperty(void *SimpleContext, bool Property) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    bool OldProperty = Simple->BooleanProperty;
+bool Simple_SetBooleanProperty(void *handle, bool property) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    const bool old_property = simple->boolean_property;
 
-    Simple->BooleanProperty = Property;
+    simple->boolean_property = property;
 
     NotificationCenter_FireAfterDelayWithJSON(
-        "Simple", "Changed", Class_InstanceId(Simple), 0, "{ \"newValue\": %s, \"oldValue\": %s }",
-        Simple->BooleanProperty ? "true" : "false", OldProperty ? "true" : "false");
+        "Simple", "Changed", Class_InstanceId(simple), 0, "{ \"newValue\": %s, \"oldValue\": %s }",
+        simple->boolean_property ? "true" : "false", old_property ? "true" : "false");
     return true;
 }
 
-bool Simple_GetBooleanProperty(void *SimpleContext) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    return Simple->BooleanProperty;
+bool Simple_GetBooleanProperty(void *handle) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    return simple->boolean_property;
 }
 
-bool Simple_SetStringProperty(void *SimpleContext, const char *Property) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    char OldProperty[320] = {0};
+bool Simple_SetStringProperty(void *handle, const char *property) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    char old_property[320] = {0};
 
-    strncpy(OldProperty, Simple->StringProperty, sizeof(OldProperty));
-    OldProperty[sizeof(OldProperty) - 1] = 0;
-    strncpy(Simple->StringProperty, Property, sizeof(Simple->StringProperty));
-    Simple->StringProperty[sizeof(Simple->StringProperty) - 1] = 0;
+    strncpy(old_property, simple->string_property, sizeof(old_property));
+    old_property[sizeof(old_property) - 1] = 0;
+    strncpy(simple->string_property, property, sizeof(simple->string_property));
+    simple->string_property[sizeof(simple->string_property) - 1] = 0;
 
     // FireWithJSON format: use %js for javascript string - automatically escapes string
     // Use after delay because I don't need it to wait for the return
 
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(Simple), 0,
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "Changed", Class_InstanceId(simple), 0,
                                               "{ \"newValue\": \"%js\", \"oldValue\": \"%js\" }",
-                                              Simple->StringProperty, OldProperty);
+                                              simple->string_property, old_property);
     return true;
 }
 
-const char *Simple_GetStringProperty(void *SimpleContext) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    return Simple->StringProperty;
+const char *Simple_GetStringProperty(void *handle) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    return simple->string_property;
 }
 
-bool Simple_StartValueRequest(void *SimpleContext) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
+bool Simple_StartValueRequest(void *handle) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
 
     // Add an observer to wait for a response to our request
-    NotificationCenter_AddInstanceObserver("Simple", "ValueResponse", Class_InstanceId(Simple), Simple,
-                                           Simple_Notification_OnValueResponse);
+    NotificationCenter_AddInstanceObserver("Simple", "ValueResponse", Class_InstanceId(simple), simple,
+                                           Notification_OnValueResponse);
 
     // Send a request for a value
-    NotificationCenter_FireAfterDelayWithJSON("Simple", "ValueRequest", Class_InstanceId(Simple), 0, "{}");
+    NotificationCenter_FireAfterDelayWithJSON("Simple", "ValueRequest", Class_InstanceId(simple), 0, "{}");
     return true;
 }
 
 /*********************************************************************/
 // Interop functions
 
-bool Simple_GetInstanceId(void *SimpleContext, char *String, int32_t MaxString) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    strncpy(String, Class_InstanceId(Simple), MaxString);
-    String[MaxString - 1] = 0;
+bool Simple_GetInstanceId(void *handle, char *string, int32_t max_string) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    strncpy(string, Class_InstanceId(simple), max_string);
+    string[max_string - 1] = 0;
     return true;
 }
 
-bool Simple_Process(void *SimpleContext) {
+bool Simple_Process(void *handle) {
     // This function is called once per tick and can be used to process simple operations and
     // thread synchronization.
 
     return true;
 }
 
-bool Simple_Invoke(void *SimpleContext, echandle MethodDictionaryHandle, echandle ReturnDictionaryHandle) {
+bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle return_dictionary_handle) {
     // EVERYTHING is marshaled in AND out as a JSON string, use any type supported by JSON and
     // it should marshal ok.
 
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    echandle ItemHandle = NULL;
-    int32_t RetVal = true;
-    int32_t ReturnValue = false;
-    const char *Method = NULL;
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    echandle item_handle = NULL;
+    int32_t ret_val = true;
+    int32_t return_value = false;
+    const char *method = NULL;
 
-    if (IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "method", &Method) == false)
+    if (!IDictionary_GetStringPtrByKey(method_dictionary_handle, "method", &method))
         return false;
 
-    if (strcmp(Method, "setIntProperty") == 0) {
-        int64_t Value64 = 0;
-        RetVal = IDictionary_GetInt64ByKey(MethodDictionaryHandle, "value", &Value64);
-        if (RetVal == true)
-            ReturnValue = Simple_SetIntProperty(SimpleContext, Value64);
-        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (strcmp(Method, "getIntProperty") == 0) {
-        int64_t Value64 = Simple_GetIntProperty(Simple);
-        IDictionary_AddInt(ReturnDictionaryHandle, "returnValue", Value64, &ItemHandle);
-    } else if (strcmp(Method, "setFloatProperty") == 0) {
-        float64_t ValueFloat = 0;
-        RetVal = IDictionary_GetFloatByKey(MethodDictionaryHandle, "value", &ValueFloat);
-        if (RetVal == true)
-            ReturnValue = Simple_SetFloatProperty(SimpleContext, ValueFloat);
-        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (strcmp(Method, "getFloatProperty") == 0) {
-        float64_t ValueFloat = Simple_GetFloatProperty(Simple);
-        IDictionary_AddFloat(ReturnDictionaryHandle, "returnValue", ValueFloat, &ItemHandle);
-    } else if (strcmp(Method, "setBooleanProperty") == 0) {
-        bool ValueBool = 0;
-        RetVal = IDictionary_GetBooleanByKey(MethodDictionaryHandle, "value", &ValueBool);
-        if (RetVal == true)
-            ReturnValue = Simple_SetBooleanProperty(SimpleContext, ValueBool);
-        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (strcmp(Method, "getBooleanProperty") == 0) {
-        bool ValueBool = Simple_GetBooleanProperty(Simple);
-        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ValueBool, &ItemHandle);
-    } else if (strcmp(Method, "setStringProperty") == 0) {
-        const char *ValueString = NULL;
-        RetVal = IDictionary_GetStringPtrByKey(MethodDictionaryHandle, "value", &ValueString);
-        if (RetVal == true)
-            ReturnValue = Simple_SetStringProperty(SimpleContext, ValueString);
-        IDictionary_AddBoolean(ReturnDictionaryHandle, "returnValue", ReturnValue, &ItemHandle);
-    } else if (strcmp(Method, "getStringProperty") == 0) {
-        const char *ValueString = Simple_GetStringProperty(Simple);
-        IDictionary_AddString(ReturnDictionaryHandle, "returnValue", ValueString, &ItemHandle);
-    } else if (strcmp(Method, "startValueRequest") == 0) {
-        RetVal = Simple_StartValueRequest(Simple);
-        IDictionary_AddInt(ReturnDictionaryHandle, "returnValue", RetVal, &ItemHandle);
+    if (strcmp(method, "setIntProperty") == 0) {
+        int64_t value = 0;
+        ret_val = IDictionary_GetInt64ByKey(method_dictionary_handle, "value", &value);
+        if (ret_val)
+            return_value = Simple_SetIntProperty(handle, value);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+    } else if (strcmp(method, "getIntProperty") == 0) {
+        const int64_t value = Simple_GetIntProperty(simple);
+        IDictionary_AddInt(return_dictionary_handle, "returnValue", value, &item_handle);
+    } else if (strcmp(method, "setFloatProperty") == 0) {
+        float64_t value_float = 0;
+        ret_val = IDictionary_GetFloatByKey(method_dictionary_handle, "value", &value_float);
+        if (ret_val)
+            return_value = Simple_SetFloatProperty(handle, value_float);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+    } else if (strcmp(method, "getFloatProperty") == 0) {
+        const float64_t value_float = Simple_GetFloatProperty(simple);
+        IDictionary_AddFloat(return_dictionary_handle, "returnValue", value_float, &item_handle);
+    } else if (strcmp(method, "setBooleanProperty") == 0) {
+        bool value = 0;
+        ret_val = IDictionary_GetBooleanByKey(method_dictionary_handle, "value", &value);
+        if (ret_val)
+            return_value = Simple_SetBooleanProperty(handle, value);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+    } else if (strcmp(method, "getBooleanProperty") == 0) {
+        const bool value = Simple_GetBooleanProperty(simple);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", value, &item_handle);
+    } else if (strcmp(method, "setStringProperty") == 0) {
+        const char *value_string = NULL;
+        ret_val = IDictionary_GetStringPtrByKey(method_dictionary_handle, "value", &value_string);
+        if (ret_val)
+            return_value = Simple_SetStringProperty(handle, value_string);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+    } else if (strcmp(method, "getStringProperty") == 0) {
+        const char *value_string = Simple_GetStringProperty(simple);
+        IDictionary_AddString(return_dictionary_handle, "returnValue", value_string, &item_handle);
+    } else if (strcmp(method, "startValueRequest") == 0) {
+        ret_val = Simple_StartValueRequest(simple);
+        IDictionary_AddInt(return_dictionary_handle, "returnValue", ret_val, &item_handle);
     } else {
-        RetVal = false;
+        ret_val = false;
     }
 
-    return RetVal;
+    return ret_val;
 }
 
 /*********************************************************************/
 // Creation/deletion functions
 
 void *Simple_Create(void) {
-    SimpleStruct *Simple = (SimpleStruct *)calloc(1, sizeof(SimpleStruct));
-    if (!Simple)
+    SimpleStruct *simple = (SimpleStruct *)calloc(1, sizeof(SimpleStruct));
+    if (!simple)
         return NULL;
 
-    Interop_GenerateInstanceId(Simple->Class.InstanceId, sizeof(Simple->Class.InstanceId));
+    Interop_GenerateInstanceId(simple->Class.InstanceId, sizeof(simple->Class.InstanceId));
 
-    Simple->Class.RefCount = 1;
-    NotificationCenter_AddInstanceObserver("Simple", "Update", Class_InstanceId(Simple), Simple,
-                                           Simple_Notification_OnUpdate);
-    return Simple;
+    simple->Class.RefCount = 1;
+    NotificationCenter_AddInstanceObserver("Simple", "Update", Class_InstanceId(simple), simple, Notification_OnUpdate);
+    return simple;
 }
 
-void *Simple_AddRef(void *SimpleContext) {
-    SimpleStruct *Simple = (SimpleStruct *)SimpleContext;
-    Simple->Class.RefCount += 1;
-    return Simple;
+void *Simple_AddRef(void *handle) {
+    SimpleStruct *simple = (SimpleStruct *)handle;
+    simple->Class.RefCount += 1;
+    return simple;
 }
 
-int32_t Simple_Release(void **SimpleContext) {
-    if (!SimpleContext || !*SimpleContext)
+int32_t Simple_Release(void **handle) {
+    if (!handle || !*handle)
         return 0;
-    SimpleStruct *Simple = (SimpleStruct *)*SimpleContext;
-    if (!Simple)
+    SimpleStruct *simple = (SimpleStruct *)*handle;
+    if (!simple)
         return 0;
 
-    *SimpleContext = NULL;
-    if (--Simple->Class.RefCount == 0) {
-        NotificationCenter_RemoveInstanceObserver("Simple", "ValueResponse", Class_InstanceId(Simple), Simple,
-                                                  Simple_Notification_OnValueResponse);
-        NotificationCenter_RemoveInstanceObserver("Simple", "Update", Class_InstanceId(Simple), Simple,
-                                                  Simple_Notification_OnUpdate);
-        free(Simple);
+    *handle = NULL;
+    if (--simple->Class.RefCount == 0) {
+        NotificationCenter_RemoveInstanceObserver("Simple", "ValueResponse", Class_InstanceId(simple), simple,
+                                                  Notification_OnValueResponse);
+        NotificationCenter_RemoveInstanceObserver("Simple", "Update", Class_InstanceId(simple), simple,
+                                                  Notification_OnUpdate);
+        free(simple);
         return 0;
     }
-    return Simple->Class.RefCount;
+    return simple->Class.RefCount;
 }
 
 /*********************************************************************/
