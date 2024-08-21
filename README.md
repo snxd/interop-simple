@@ -46,7 +46,7 @@ If you intend to use the interop with-in JavaScript use the following steps:
 1. Copy `Simple.js` and `SimpleExample.js` from the `js` directory to a directory in your skin called `src/interop`.
 2. Load the example code and interop in `/src/App.jsx` using `app.loadInterop`:
     ```js
-    import "./interop/SimpleExample";
+    import "./interop/SimpleExample.js";
 
     const simplePath = app.expandString("{moduleAppDirectory}{libraryPrefix}simple.{libraryExtension}");
     app.loadInterop("simple", simplePath);
