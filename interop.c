@@ -7,14 +7,13 @@
 
 /*********************************************************************/
 
-bool Interop_CreateInstance(const char *type_name, char *instance_id, int32_t instance_id_length,
-                            void *execute_user_ptr, Interop_ExecuteCallback execute,
-                            Interop_InvokeInstanceCallback *invoke_instance,
+bool Interop_CreateInstance(const char *type_name, char *instance_id, int32_t max_instance_id, void *execute_user_ptr,
+                            Interop_ExecuteCallback execute, Interop_InvokeInstanceCallback *invoke_instance,
                             Interop_ReleaseInstanceCallback *release_instance,
                             Interop_ProcessInstanceCallback *process_instance, void **user_ptr) {
     if (strcmp(type_name, "SSN.Simple") == 0) {
         void *context = Simple_Create();
-        Simple_GetInstanceId(context, instance_id, instance_id_length);
+        Simple_GetInstanceId(context, instance_id, max_instance_id);
 
         *invoke_instance = Simple_Invoke;
         *release_instance = Simple_Release;
