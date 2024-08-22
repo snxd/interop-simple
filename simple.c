@@ -170,58 +170,60 @@ bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle ret
     // it should marshal ok.
 
     SimpleStruct *simple = (SimpleStruct *)handle;
-    echandle item_handle = NULL;
-    int32_t ret_val = true;
-    int32_t return_value = false;
+    bool ret = true;
     const char *method = NULL;
 
     if (!IDictionary_GetStringPtrByKey(method_dictionary_handle, "method", &method))
         return false;
 
     if (strcmp(method, "setIntProperty") == 0) {
+        bool return_value = false;
         int64_t value = 0;
-        ret_val = IDictionary_GetInt64ByKey(method_dictionary_handle, "value", &value);
-        if (ret_val)
+        ret = IDictionary_GetInt64ByKey(method_dictionary_handle, "value", &value);
+        if (ret)
             return_value = Simple_SetIntProperty(handle, value);
-        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getIntProperty") == 0) {
         const int64_t value = Simple_GetIntProperty(simple);
-        IDictionary_AddInt(return_dictionary_handle, "returnValue", value, &item_handle);
+        IDictionary_AddInt(return_dictionary_handle, "returnValue", value, NULL);
     } else if (strcmp(method, "setFloatProperty") == 0) {
+        bool return_value = false;
         float64_t value_float = 0;
-        ret_val = IDictionary_GetFloatByKey(method_dictionary_handle, "value", &value_float);
-        if (ret_val)
+        ret = IDictionary_GetFloatByKey(method_dictionary_handle, "value", &value_float);
+        if (ret)
             return_value = Simple_SetFloatProperty(handle, value_float);
-        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getFloatProperty") == 0) {
         const float64_t value_float = Simple_GetFloatProperty(simple);
-        IDictionary_AddFloat(return_dictionary_handle, "returnValue", value_float, &item_handle);
+        IDictionary_AddFloat(return_dictionary_handle, "returnValue", value_float, NULL);
     } else if (strcmp(method, "setBooleanProperty") == 0) {
+        bool return_value = false;
         bool value = 0;
-        ret_val = IDictionary_GetBooleanByKey(method_dictionary_handle, "value", &value);
-        if (ret_val)
+        ret = IDictionary_GetBooleanByKey(method_dictionary_handle, "value", &value);
+        if (ret)
             return_value = Simple_SetBooleanProperty(handle, value);
-        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getBooleanProperty") == 0) {
         const bool value = Simple_GetBooleanProperty(simple);
-        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", value, &item_handle);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", value, NULL);
     } else if (strcmp(method, "setStringProperty") == 0) {
+        bool return_value = false;
         const char *value_string = NULL;
-        ret_val = IDictionary_GetStringPtrByKey(method_dictionary_handle, "value", &value_string);
-        if (ret_val)
+        ret = IDictionary_GetStringPtrByKey(method_dictionary_handle, "value", &value_string);
+        if (ret)
             return_value = Simple_SetStringProperty(handle, value_string);
-        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, &item_handle);
+        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getStringProperty") == 0) {
         const char *value_string = Simple_GetStringProperty(simple);
-        IDictionary_AddString(return_dictionary_handle, "returnValue", value_string, &item_handle);
+        IDictionary_AddString(return_dictionary_handle, "returnValue", value_string, NULL);
     } else if (strcmp(method, "startValueRequest") == 0) {
-        ret_val = Simple_StartValueRequest(simple);
-        IDictionary_AddInt(return_dictionary_handle, "returnValue", ret_val, &item_handle);
+        ret = Simple_StartValueRequest(simple);
+        IDictionary_AddInt(return_dictionary_handle, "returnValue", ret, NULL);
     } else {
-        ret_val = false;
+        ret = false;
     }
 
-    return ret_val;
+    return ret;
 }
 
 /*********************************************************************/
