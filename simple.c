@@ -170,7 +170,7 @@ bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle ret
     // it should marshal ok.
 
     SimpleStruct *simple = (SimpleStruct *)handle;
-    bool ret = true;
+    bool ret = false;
     const char *method = NULL;
 
     if (!IDictionary_GetStringPtrByKey(method_dictionary_handle, "method", &method))
@@ -185,7 +185,7 @@ bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle ret
         IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getIntProperty") == 0) {
         const int64_t value = Simple_GetIntProperty(simple);
-        IDictionary_AddInt(return_dictionary_handle, "returnValue", value, NULL);
+        ret = IDictionary_AddInt(return_dictionary_handle, "returnValue", value, NULL);
     } else if (strcmp(method, "setFloatProperty") == 0) {
         bool return_value = false;
         float64_t value_float = 0;
@@ -195,7 +195,7 @@ bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle ret
         IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getFloatProperty") == 0) {
         const float64_t value_float = Simple_GetFloatProperty(simple);
-        IDictionary_AddFloat(return_dictionary_handle, "returnValue", value_float, NULL);
+        ret = IDictionary_AddFloat(return_dictionary_handle, "returnValue", value_float, NULL);
     } else if (strcmp(method, "setBooleanProperty") == 0) {
         bool return_value = false;
         bool value = 0;
@@ -205,7 +205,7 @@ bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle ret
         IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getBooleanProperty") == 0) {
         const bool value = Simple_GetBooleanProperty(simple);
-        IDictionary_AddBoolean(return_dictionary_handle, "returnValue", value, NULL);
+        ret = IDictionary_AddBoolean(return_dictionary_handle, "returnValue", value, NULL);
     } else if (strcmp(method, "setStringProperty") == 0) {
         bool return_value = false;
         const char *value_string = NULL;
@@ -215,12 +215,10 @@ bool Simple_Invoke(void *handle, echandle method_dictionary_handle, echandle ret
         IDictionary_AddBoolean(return_dictionary_handle, "returnValue", return_value, NULL);
     } else if (strcmp(method, "getStringProperty") == 0) {
         const char *value_string = Simple_GetStringProperty(simple);
-        IDictionary_AddString(return_dictionary_handle, "returnValue", value_string, NULL);
+        ret = IDictionary_AddString(return_dictionary_handle, "returnValue", value_string, NULL);
     } else if (strcmp(method, "startValueRequest") == 0) {
         ret = Simple_StartValueRequest(simple);
         IDictionary_AddInt(return_dictionary_handle, "returnValue", ret, NULL);
-    } else {
-        ret = false;
     }
 
     return ret;
