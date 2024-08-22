@@ -1,4 +1,4 @@
-## Simple Interop Example for DIRECT 7.0
+## Simple Interop Example for DIRECT 7.2
 
 This is an example interop that shows how to run native code using a simple JavaScript object.
 
